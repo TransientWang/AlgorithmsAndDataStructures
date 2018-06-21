@@ -6,7 +6,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface select {
-     String sentence() ;
+     String sentence() default "";
 
 
 }

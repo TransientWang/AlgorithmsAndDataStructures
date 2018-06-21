@@ -6,9 +6,10 @@ public class Test {
 
         ddMap ddMap = (dbcon.ddMap) ProxFactory.getProx(dbcon.ddMap.class);
 
+
         ddMap.getDD();
         ddMap.getPrep();
-        ddMap.getAdmin();
+
 
     }
 }

@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.Optional;
+import java.util.TreeMap;
 
 public class MapperProx implements InvocationHandler {
     static {
@@ -15,6 +16,7 @@ public class MapperProx implements InvocationHandler {
             e.printStackTrace();
         }
     }
+
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
@@ -35,6 +37,8 @@ public class MapperProx implements InvocationHandler {
 
     private void fetch(String sql) {
 
+
+
         ResultSet resultSet = null;
         Connection connection = null;
         Statement statement = null;
@@ -44,12 +48,14 @@ public class MapperProx implements InvocationHandler {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ymq?useUnicode=true&amp" +
                     ";characterEncoding=UTF-8", "root", "root");
             statement = connection.createStatement();
+
             resultSet = statement.executeQuery(sql);
+            System.out.println(sql);
 //            resultSet.last();
             ResultSetMetaData metaData = resultSet.getMetaData();
             column = metaData.getColumnCount();
 
-            System.out.println("表名："+metaData.getTableName(1));
+            System.out.println("表名：" + metaData.getTableName(1));
             for (int i = 1; i <= column; i++) {
                 System.out.print(metaData.getColumnName(i) + "    | ");
             }
