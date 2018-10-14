@@ -3,14 +3,15 @@ package test.dynamicProgramming;
 import org.junit.Test;
 
 
-
 public class dynamicTest {
     @Test
     public void test1() {
         //相应长度钢条的价格
         int[] p = new int[]{1, 5, 8, 9, 10, 17, 17, 20, 24, 30};
-        System.out.println(menoizedCutRod(p, 10));
+//        System.out.println(menoizedCutRod(p, 10));
+        System.out.println(bottomUpRod(p, 10));
     }
+
     //钢条切割问题
     //带备忘的自顶向下法
     //将钢条从左边割下长度为I的一段，只对右边剩下的长度为n-i的一端继续进行切割（递归求解），
@@ -31,7 +32,7 @@ public class dynamicTest {
     public int memoizedCutRodAux(int[] p, int n, int[] r) {
         //如果r[n]不为-1。说明已经计算过长度为n的钢条的最优价格，直接返回
         if (r[n] >= 0) {
-            System.out.println("已计算r["+n+"]:"+r[n]);
+            System.out.println("已计算r[" + n + "]:" + r[n]);
             return r[n];
         }
         int q = -1;
@@ -49,5 +50,22 @@ public class dynamicTest {
         }
         r[n] = q;
         return q;
+    }
+
+    //自底向上求解
+    public int bottomUpRod(int[] p, int n) {
+        //保存最优解
+        int[] r = new int[n + 1];
+        int q;
+        //求解i寸的最优解
+        for (int i = 1; i <= n; i++) {
+            q = -1;
+            //在从0到j长度里通过比较求出当前最优解
+            for (int j = 1; j <= i; j++) {
+                q = Math.max(q, p[j - 1] + r[i - j]);
+            }
+            r[i] = q;
+        }
+        return r[n];
     }
 }
