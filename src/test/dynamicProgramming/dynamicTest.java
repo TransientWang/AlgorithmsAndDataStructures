@@ -139,9 +139,7 @@ public class dynamicTest {
             //先求取当前最大自数组的和
             sum += arr[i];
             //如果当前和大于整个数组范围内求得的最大自数组的和Max，即可更新Max
-            if (sum > Max) {
-                Max = sum;
-            }
+            Max = Math.max(sum, Max);
             //如果当前计算的自数组的和已经小于0，在加上以后求得的最大自数组也只会让Max变小
             //再让其参与计算已经没有意义。所以可以把当前最大自数组和置为0重新开始计算
             if (sum < 0) {
