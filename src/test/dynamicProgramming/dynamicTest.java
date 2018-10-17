@@ -150,4 +150,70 @@ public class dynamicTest {
         System.out.println(Max);
 
     }
+
+    /**
+     * @Description 最长公共个子序列问题
+     * 用一个二维数组做辅助
+     * 分为三种情况，设字符串chars1长度为m,chars2为n。
+     * 1、当chars1[m]==chars2[n]时 找到一个公共子序列chars[1]
+     * 2、当chars1[m]!=chars2[n]时 2、公共子序列必然在chars1[m-1]与chars2[n]或者3、chars1[m]与chars2[n-1]之间
+     * @Param [chars1, chars2]
+     * @return void
+     * @Line 158
+     **/
+    public void LSC(char[] chars1, char[] chars2) {
+        //辅助数组 记录子序列的长度
+        int[][] chess = new int[chars1.length][chars2.length];
+        for (int i = 1; i < chars1.length; i++) {
+            for (int j = 1; j < chars2.length; j++) {
+                //从序列的最后一位开始
+                if (chars1[i] == chars2[j]) {
+                    //如果相等，最长子序列长度加一
+                    chess[i][j] = chess[i - 1][j - 1] + 1;
+                } else {
+                    //不行等，当前序列长度等于上面两种情况里大的一种
+                    chess[i][j] = Math.max(chess[i - 1][j], chess[i][j - 1]);
+                }
+
+            }
+        }
+        for (int i = 0; i < chess.length; i++) {
+            System.out.println();
+            for (int j = 0; j < chess[i].length; j++) {
+                System.out.print(chess[i][j] + " ");
+            }
+
+        }
+        System.out.println();
+        StringBuilder stringBuilder = new StringBuilder();
+        int k, j;
+        k = chars1.length - 1;
+        j = chars2.length - 1;
+        //根据辅助数组来找出最长子序列
+        while (k >= 1 && j >= 1) {
+            if (chars1[k] == chars2[j]) {
+                stringBuilder.append(chars1[k]);
+                k--;
+                j--;
+            } else {
+                //如果上面情况2里的哪一种情况较大，就把相应的序列减位置减小
+                if (chess[k][j - 1] > chess[k - 1][j]) {
+                    j--;
+                } else {
+                    k--;
+                }
+            }
+
+        }
+
+        System.out.println(stringBuilder.reverse());
+    }
+
+    @Test
+    public void LscTest() {
+        char[] chars1 = "awangkaugt".toCharArray();
+        char[] chars2 = "cwangznhyd".toCharArray();
+        LSC(chars1, chars2);
+
+    }
 }
