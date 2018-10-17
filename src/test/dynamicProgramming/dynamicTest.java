@@ -68,4 +68,88 @@ public class dynamicTest {
         }
         return r[n];
     }
+
+
+    @Test
+    public void test2() {
+        int[] v = {8, 10, 6, 3, 7, 2};
+        int[] w = {4, 6, 2, 2, 5, 1};
+        System.out.println(bagSolution(w, v, 12));
+    }
+
+    /**
+     * @return void
+     * @Description 0-1背包问题
+     * w:物品的重量  v:物品的价值 j:背包的容量
+     * @Param [w, v, j]
+     * @Line 77
+     **/
+    public int bagSolution(int[] w, int[] v, int j) {
+
+        if (w.length > 0 && w[0] > j) {
+            return 0;
+        }
+        int[][] m = new int[w.length][j];
+        j -= 1;
+        m[0][j] = v[0];
+        int q = 0;
+        for (int i = 1; i < w.length; i++) {
+            if (m[i - 1][j] > m[i - 1][j - w[i]] + v[i]) {
+                m[i][j] = m[i - 1][j];
+            } else {
+                m[i][j - w[i]] = m[i - 1][j - w[i]] + v[i];
+                if (m[i][j - w[i]] > q) {
+                    q = m[i][j - w[i]];
+                }
+            }
+        }
+        for (int i = 0; i < 6; i++) {
+            for (int k = 0; k < j + 1; k++) {
+                System.out.print(m[i][k] + " ");
+            }
+            System.out.println();
+        }
+        return q;
+    }
+
+    @Test
+    public void test() {
+        int[] arr = new int[]{-1, 1, -10, 2, -1, 3, 4, -1, 5, -2, -3};
+        int[] arr1 = new int[]{-3, -2, -3};
+        maxArray(arr1);
+    }
+
+    /**
+     * @Description 最大自数组和问题
+     * 采用动态规划 考虑一个问题，只要当前数组加上下一个值的和大于0就说明和是增加的不论和是否减小，
+     * 也就是说明负数不可能作为最大自数组的开始，因为它一定会让这个数组减小，
+     * 当前面子数组的和为小于0时，加上后面的自数组也一定会让总的和变小。
+     * 所以可以直接放弃，从下一位从新计算新的和。
+     * 由于只遍历了一遍数组，所以时间复杂度为分f（o）
+     * @Param [arr]
+     * @return void
+     * @Line 126
+     **/
+    public void maxArray(int[] arr) {
+        //当前计算的自数组最大值
+        int sum = 0;
+        //保存整个数组范围内求得的最大自数组和
+        int Max = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            //先求取当前最大自数组的和
+            sum += arr[i];
+            //如果当前和大于整个数组范围内求得的最大自数组的和Max，即可更新Max
+            if (sum > Max) {
+                Max = sum;
+            }
+            //如果当前计算的自数组的和已经小于0，在加上以后求得的最大自数组也只会让Max变小
+            //再让其参与计算已经没有意义。所以可以把当前最大自数组和置为0重新开始计算
+            if (sum < 0) {
+                sum = 0;
+            }
+
+        }
+        System.out.println(Max);
+
+    }
 }
