@@ -1,5 +1,6 @@
 package test.dynamicProgramming;
 
+import com.sun.source.tree.IfTree;
 import org.junit.Test;
 
 
@@ -207,7 +208,6 @@ public class dynamicTest {
      * 1、当chars1[m]==chars2[n]时 找到一个公共子序列chars[1]
      * 2、当chars1[m]!=chars2[n]时 2、公共子序列必然在chars1[m-1]与chars2[n]或者3、chars1[m]与chars2[n-1]之间
      * @Param [chars1, chars2]
-     * @return void
      * @Line 158
      **/
     public void LSC(char[] chars1, char[] chars2) {
@@ -264,5 +264,40 @@ public class dynamicTest {
         char[] chars2 = "cwangznhyd".toCharArray();
         LSC(chars1, chars2);
 
+    }
+
+    @Test
+    public void palindromeTest() {
+        String test = "w123454321abcdcbiuoiuo";
+        System.out.println(findPalindrome(test));
+    }
+
+    /**
+     * @return java.lang.String
+     * @Description 动态规划寻找字符串里的最长子串
+     * realResult为最长回文串默认值为palindrome[0]（没有回文就返回第一个就好了），result为当前最长子串
+     * 从字符串的palindrome[1]开始，用一个h变量记录回文的边界
+     *当以i为中心的两个对称的字符串相等时就更新当前最长回文的值
+     *当不满足条件时候，就把i右移h-1位（因为h等于1，所以要减去1）
+     * 再把h重置为1，再比较当前最长回文串和最长回文realResult的长度来更新最长回文串
+     * 最后返回最长回文串
+     * 时间复杂度：因为只遍历了一遍字符串，while只是判断回文长度，所以时间复杂度为O（n）
+     * @Param [palindrome]
+     * @Line 280
+     **/
+    public String findPalindrome(String palindrome) {
+        String result = "";
+        String realResult = palindrome.substring(0, 1);
+        int h = 1;
+        for (int i = 1; i < palindrome.length(); i++) {
+            while ((i + h) < palindrome.length() && (i - h) >= 0 && palindrome.charAt(i + h) == palindrome.charAt(i - h)) {
+                result = palindrome.substring(i - h, i + h + 1);
+                h++;
+            }
+            i = i + h - 1;
+            h = 1;
+            realResult = result.length() > realResult.length() ? result : realResult;
+        }
+        return realResult;
     }
 }
