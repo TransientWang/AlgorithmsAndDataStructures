@@ -116,7 +116,10 @@ public class dynamicTest {
     public void test() {
         int[] arr = new int[]{-1, 1, -10, 2, -1, 3, 4, -1, 5, -2, -3};
         int[] arr1 = new int[]{-3, -2, -3};
-        maxArray(arr1);
+        maxArray(arr);
+        System.out.println(maxArray1(arr, arr.length));
+        System.out.println(maxArray2(arr));
+
     }
 
     /**
@@ -127,7 +130,6 @@ public class dynamicTest {
      * 所以可以直接放弃，从下一位从新计算新的和。
      * 由于只遍历了一遍数组，所以时间复杂度为分f（o）
      * @Param [arr]
-     * @return void
      * @Line 126
      **/
     public void maxArray(int[] arr) {
@@ -148,6 +150,53 @@ public class dynamicTest {
 
         }
         System.out.println(Max);
+
+    }
+
+    /**
+     * @return int
+     * @Description 最大自数组问题
+     * 当前currSum加上下一个数 还没有下一个数大的时候（说明之前保存的最大自数组和还没有当前的
+     * 大，而且之前的最大值已经被保存，可以放心的将当前的数保存到当前最大值里面），就把currSum设为下一个数
+     * maxSum 没有currSum大时，更新cmaxSum的值
+     * @Param [a, n]
+     * @Line 160
+     **/
+    public int maxArray1(int[] a, int n) {
+        int currSum = 0;
+        int maxSum = a[0];
+        for (int j = 0; j < n; j++) {
+            currSum = (a[j] > currSum + a[j]) ? a[j] : currSum + a[j];
+            maxSum = (maxSum > currSum) ? maxSum : currSum;
+        }
+        return maxSum;
+    }
+
+    /**
+     * @Description 最大字数组
+     * 三个for循环
+     * 第一个循环从前到后遍历数组
+     * 第二个循环，从第一个循环到的位置开始一直到数组结束
+     * 第三个循环从，第一个循环到的位置开始，一直到第二个循环到的位置（想当与具体求出每一个子数组）
+     * 这样就遍历了整个数组里所有的子数组了然后在进行比较
+     * @Param [a]
+     * @return int
+     * @Line 180
+     **/
+    public int maxArray2(int[] a) {
+        var sum = 0;
+        var maxSum = a[0];
+        for (var i = 0; i < a.length; i++) {
+            for (var j = i; j < a.length; j++) {
+                for (var k = i; k < j; k++) {
+                    sum += a[k];
+                }
+                maxSum = sum > maxSum ? sum : maxSum;
+                sum = 0;
+            }
+        }
+
+        return maxSum;
 
     }
 
