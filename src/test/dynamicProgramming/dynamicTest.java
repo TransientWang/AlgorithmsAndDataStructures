@@ -181,7 +181,6 @@ public class dynamicTest {
      * 第三个循环从，第一个循环到的位置开始，一直到第二个循环到的位置（想当与具体求出每一个子数组）
      * 这样就遍历了整个数组里所有的子数组了然后在进行比较
      * @Param [a]
-     * @return int
      * @Line 180
      **/
     public int maxArray2(int[] a) {
@@ -299,5 +298,47 @@ public class dynamicTest {
             realResult = result.length() > realResult.length() ? result : realResult;
         }
         return realResult;
+    }
+
+
+    @Test
+    public void xtest() {
+        System.out.println(cornSolution(3));
+    }
+
+    public int cornSolution(int num) {
+        int[] arr = new int[100 + 1];
+//        for (int i = 0; i < arr.length; i++) {
+//            arr[i] = 1;
+//        }
+        arr[1] = 1;
+        arr[2] = 1;
+        int[] cor = new int[]{1, 2, 5, 10};
+
+        for (int i = 1; i <= num; i++) {
+            for (int j = 0; j < cor.length; j++) {
+                if (i >= cor[j])
+                    arr[i] = arr[i] + arr[i - cor[j]];
+            }
+
+        }
+
+        Arrays.stream(arr).forEachOrdered(var -> System.out.print(var + " "));
+        return 0;
+    }
+
+    @Test
+    public void rer(){
+        try {
+//            Method
+            MethodHandles.Lookup lookup = MethodHandles.lookup();
+            MethodHandle methodHandle  = lookup.findStatic(dynamicTest.class,"methtest", MethodType.methodType(void.class));
+            methodHandle.invoke();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+    }
+    public static void methtest(){
+        System.out.println("methtest");
     }
 }
