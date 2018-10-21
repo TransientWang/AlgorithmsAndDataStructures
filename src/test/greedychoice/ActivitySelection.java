@@ -2,6 +2,8 @@ package test.greedychoice;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * @author wangfy
  * @Description 贪心选择
@@ -110,7 +112,7 @@ public class ActivitySelection {
                     t = j;
                 }
             }
-            //
+            //更新已走节点
             flag[t] = true;
             for (int j = 1; j < p.length; j++) {
                 //如果此节点没走过而且从t到j可以达到
