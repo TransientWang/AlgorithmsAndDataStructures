@@ -2,7 +2,7 @@ package test.greedychoice;
 
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * @author wangfy
@@ -72,7 +72,7 @@ public class ActivitySelection {
 
     /**
      * @return void
-     * @Description 单元最短路径
+     * @Description 单元最短路径，算法时间复杂度为O（n²）,空间复杂度为常数阶O（n）
      * map代表有向图 从i到j的权重
      * @Param [map]
      * @Line 64
@@ -131,8 +131,8 @@ public class ActivitySelection {
         StringBuilder stringBuilder = new StringBuilder();
         System.out.println();
         //根据p找出应走路径
-        int index=4;
-        while (index>0){
+        int index = 4;
+        while (index > 0) {
             stringBuilder.append(String.valueOf(index + 1));
             stringBuilder.append("-");
             index = p[index];
@@ -140,5 +140,127 @@ public class ActivitySelection {
         stringBuilder.append(String.valueOf(index + 1));
         System.out.println(stringBuilder);
 
+    }
+
+
+
+
+    //哈弗曼树测试
+    @Test
+    public void hhtest() {
+        Integer[] integers = new Integer[]{5, 32, 18, 7, 25, 13};
+        List<Integer> list = Arrays.asList(integers);
+        haHaffCodeSolution(list);
+    }
+
+    /**
+     * @return void
+     * @Description 哈夫曼编码
+     * @Param [list]
+     * @Line 168
+     **/
+    public void haHaffCodeSolution(List<Integer> list) {
+
+        List<Tree> treeList = new ArrayList<>();
+
+        Tree parentTree = null;
+        for (int i = 0; i < list.size(); i++) {
+            treeList.add(new Tree(list.get(i)));
+        }
+        for (int i = 0; i < list.size() - 1; i++) {
+            Tree leftTree = treeList.stream().min((var1, var2) -> var1.getValue() - var2.getValue()).get();
+            treeList.remove(leftTree);
+            Tree rightTree = treeList.stream().min((var1, var2) -> var1.getValue() - var2.getValue()).get();
+            treeList.remove(rightTree);
+            parentTree = new Tree(leftTree, rightTree, leftTree.getValue() + rightTree.getValue());
+            treeList.add(parentTree);
+        }
+        findChild(parentTree, true);
+    }
+
+    /**
+     * @Description 展示哈夫曼树
+     * @return void
+     * @Param [tree, flag]
+     * @Line 194
+     **/
+    public void findChild(Tree tree, boolean flag) {
+        if (flag == true) {
+            System.out.println("  " + tree.getValue());
+            System.out.println("/     \\");
+
+        }
+        if (tree.getLeftCgild() != null) {
+            System.out.print(tree.getLeftCgild().getValue() + "     ");
+            if (tree.getRightCgild() != null) {
+                System.out.println(tree.getRightCgild().getValue());
+            }
+            System.out.print(" /       \\\r\n");
+
+        }
+        System.out.println();
+        if (tree.getLeftCgild() != null) {
+            findChild(tree.getLeftCgild(), false);
+        }
+        if (tree.getRightCgild() != null) {
+            findChild(tree.getRightCgild(), false);
+        }
+
+
+    }
+
+    class Tree {
+        private Tree parent;
+        private Tree leftCgild;
+        private Tree rightCgild;
+        private Integer value;
+
+        public Tree() {
+
+        }
+
+
+        public Tree(Tree leftCgild, Tree rightCgild, Integer value) {
+            this(value);
+            this.leftCgild = leftCgild;
+            this.rightCgild = rightCgild;
+
+        }
+
+        public Tree(Integer value) {
+            this.value = value;
+        }
+
+        public Tree getParent() {
+            return parent;
+        }
+
+        public void setParent(Tree parent) {
+            this.parent = parent;
+        }
+
+        public Tree getLeftCgild() {
+            return leftCgild;
+        }
+
+        public void setLeftCgild(Tree leftCgild) {
+            this.leftCgild = leftCgild;
+        }
+
+        public Tree getRightCgild() {
+            return rightCgild;
+        }
+
+        public void setRightCgild(Tree rightCgild) {
+            this.rightCgild = rightCgild;
+        }
+
+        public Integer getValue() {
+            return value;
+        }
+
+        public void setValue(Integer value) {
+            this.value = value;
+        }
     }
 }
