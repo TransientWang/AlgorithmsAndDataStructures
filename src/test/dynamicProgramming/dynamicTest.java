@@ -201,6 +201,7 @@ public class dynamicTest {
     }
 
     /**
+     * @return void
      * @Description 最长公共个子序列问题
      * 用一个二维数组做辅助
      * 分为三种情况，设字符串chars1长度为m,chars2为n。
@@ -267,17 +268,17 @@ public class dynamicTest {
 
     @Test
     public void palindromeTest() {
-        String test = "w123454321abcdcbiuoiuo";
+        String test = "w12234543221abcdcbiuoiuo";
         System.out.println(findPalindrome(test));
     }
 
     /**
      * @return java.lang.String
-     * @Description 动态规划寻找字符串里的最长子串
+     * @Description 动态规划寻找字符串里的最长回文子串
      * realResult为最长回文串默认值为palindrome[0]（没有回文就返回第一个就好了），result为当前最长子串
      * 从字符串的palindrome[1]开始，用一个h变量记录回文的边界
-     *当以i为中心的两个对称的字符串相等时就更新当前最长回文的值
-     *当不满足条件时候，就把i右移h-1位（因为h等于1，所以要减去1）
+     * 当以i为中心的两个对称的字符串相等时就更新当前最长回文的值
+     * 当不满足条件时候，就把i右移h-1位（因为h等于1，所以要减去1）
      * 再把h重置为1，再比较当前最长回文串和最长回文realResult的长度来更新最长回文串
      * 最后返回最长回文串
      * 时间复杂度：因为只遍历了一遍字符串，while只是判断回文长度，所以时间复杂度为O（n）
@@ -306,6 +307,12 @@ public class dynamicTest {
         System.out.println(cornSolution(3));
     }
 
+    /**
+     * @return int
+     * @Description TODO 硬币兑换问题没解决
+     * @Param [num]
+     * @Line 324
+     **/
     public int cornSolution(int num) {
         int[] arr = new int[100 + 1];
 //        for (int i = 0; i < arr.length; i++) {
@@ -332,13 +339,14 @@ public class dynamicTest {
         try {
 //            Method
             MethodHandles.Lookup lookup = MethodHandles.lookup();
-            MethodHandle methodHandle  = lookup.findStatic(dynamicTest.class,"methtest", MethodType.methodType(void.class));
+            MethodHandle methodHandle = lookup.findStatic(dynamicTest.class, "methtest", MethodType.methodType(void.class));
             methodHandle.invoke();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
     }
-    public static void methtest(){
+
+    public static void methtest() {
         System.out.println("methtest");
     }
 }
