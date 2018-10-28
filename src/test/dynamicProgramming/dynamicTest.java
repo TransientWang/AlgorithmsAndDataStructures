@@ -124,7 +124,8 @@ public class dynamicTest {
     }
 
     /**
-     * @Description 最大自数组和问题
+     * @return void
+     * @Description 最大子数组和问题
      * 采用动态规划 考虑一个问题，只要当前数组加上下一个值的和大于0就说明和是增加的不论和是否减小，
      * 也就是说明负数不可能作为最大自数组的开始，因为它一定会让这个数组减小，
      * 当前面子数组的和为小于0时，加上后面的自数组也一定会让总的和变小。
@@ -174,6 +175,7 @@ public class dynamicTest {
     }
 
     /**
+     * @return int
      * @Description 最大字数组
      * 三个for循环
      * 第一个循环从前到后遍历数组
@@ -263,7 +265,6 @@ public class dynamicTest {
         char[] chars1 = "awangkaugt".toCharArray();
         char[] chars2 = "cwangznhyd".toCharArray();
         LSC(chars1, chars2);
-
     }
 
     @Test
@@ -335,18 +336,54 @@ public class dynamicTest {
     }
 
     @Test
-    public void rer(){
-        try {
-//            Method
-            MethodHandles.Lookup lookup = MethodHandles.lookup();
-            MethodHandle methodHandle = lookup.findStatic(dynamicTest.class, "methtest", MethodType.methodType(void.class));
-            methodHandle.invoke();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
+    public void tests() {
+        uniquePaths1(1, 2);
     }
 
-    public static void methtest() {
-        System.out.println("methtest");
+    /**
+     * @Description 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
+     * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
+     * 一、定义最优解的子结构、
+     *     先考虑 m=1,n>1的情况也就是说只有一行  所以这行上的每一步都只有一种解法。解  ：1
+     *            当m >1,n==1是 情况同上
+     *      定义一个二维数组代表从m到n有多少种路径，那么 下一步路径数 就是m-1,n 与m,n-1 的和
+     * 二、递归的定义最优解：
+     *
+     *
+     *              +
+     *              |  m=1 || n==1   path[i][j] == 1
+     *      f(m,n) =|  f(m,n) = f(m-1,n)+f(m,n-1)
+     *              |
+     *              +
+     * @Param [m, n]
+     * @return void
+     * @Line 357
+     **/
+    public void uniquePaths1(int m, int n) {
+        int[][] path = new int[m][n];
+
+        for (int i = 0; i <m ; i++) {
+            path[i][0] =1;
+        }
+        for (int i = 0; i <n ; i++) {
+            path[0][i] =1;
+        }
+        if (n > 1)
+        path[0][1] = 1;
+        if (m > 1)
+        path[1][0] = 1;
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                    path[i][j] = path[i - 1][j] + path[i][j - 1];
+
+            }
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(path[i][j]+" ");
+            }
+            System.out.println();
+        }
     }
 }
