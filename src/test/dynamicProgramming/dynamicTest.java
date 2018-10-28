@@ -372,7 +372,7 @@ public class dynamicTest {
             path[0][i] = 1;
         }
         if (n > 1)
-        path[0][1] = 1;
+            path[0][1] = 1;
         if (m > 1)
         path[1][0] = 1;
         for (int i = 1; i < m; i++) {
@@ -472,6 +472,18 @@ public class dynamicTest {
         System.out.println(minPathSum(ss));
     }
 
+    /**
+     * @Description 给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
+     *
+     * 说明：每次只能向下或者向右移动一步。
+     * 一、分析最优解的结构特征
+     *     假设极端情况  当只有一行一列时  最优解就是grid[0][0]
+     *     有一行或者一列时 最优解 就是 这一行或者一列的和
+     *     在多行多列的情况时从自顶点向下来看 到每个点的最小距离为能到达它的两个前顶点中最小的一个解
+     * @Param [grid]
+     * @return int
+     * @Line 489
+     **/
     public int minPathSum(int[][] grid) {
         int[][] res = new int[grid.length][grid[0].length];
         res[0][0] = grid[0][0];
@@ -486,7 +498,6 @@ public class dynamicTest {
 
         for (int i = 1; i < grid.length; i++) {
             for (int j = 1; j < grid[0].length; j++) {
-//                res[i][j] = res[i - 1][j] + grid[i][j] if res[x - 1][y] < res[x][y - 1] else res[x][y - 1] + grid[x][y]
                 res[i][j] = res[i - 1][j] < res[i][j - 1]?res[i - 1][j] + grid[i][j]:res[i][j - 1] + grid[i][j];
             }
         }
