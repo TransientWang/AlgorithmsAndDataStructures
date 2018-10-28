@@ -1,7 +1,9 @@
 package test.dynamicProgramming;
 
-import com.sun.source.tree.IfTree;
+
 import org.junit.Test;
+import java.util.Arrays;
+
 
 
 public class dynamicTest {
@@ -348,17 +350,17 @@ public class dynamicTest {
      * @Description 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
      * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
      * 一、定义最优解的子结构、
-     *     先考虑 m=1,n>1的情况也就是说只有一行  所以这行上的每一步都只有一种解法。解  ：1
-     *            当m >1,n==1是 情况同上
-     *      定义一个二维数组代表从m到n有多少种路径，那么 下一步路径数 就是m-1,n 与m,n-1 的和
+     * 先考虑 m=1,n>1的情况也就是说只有一行  所以这行上的每一步都只有一种解法。解  ：1
+     * 当m >1,n==1是 情况同上
+     * 定义一个二维数组代表从m到n有多少种路径，那么 下一步路径数 就是m-1,n 与m,n-1 的和
      * 二、递归的定义最优解：
-     *
-     *
-     *              +
-     *              |  m=1 || n==1   path[i][j] == 1
-     *      f(m,n) =|  f(m,n) = f(m-1,n)+f(m,n-1)
-     *              |
-     *              +
+     * <p>
+     * <p>
+     * +
+     * |  m=1 || n==1   path[i][j] == 1
+     * f(m,n) =|  f(m,n) = f(m-1,n)+f(m,n-1)
+     * |
+     * +
      * @Param [m, n]
      * @Line 357
      **/
@@ -374,7 +376,7 @@ public class dynamicTest {
         if (n > 1)
             path[0][1] = 1;
         if (m > 1)
-        path[1][0] = 1;
+            path[1][0] = 1;
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 path[i][j] = path[i - 1][j] + path[i][j - 1];
@@ -391,9 +393,9 @@ public class dynamicTest {
     }
 
     /**
+     * @return int
      * @Description 路径问题   输入有1代表此路不通
      * @Param [obstacleGrid]
-     * @return int
      * @Line 407
      **/
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
@@ -413,7 +415,7 @@ public class dynamicTest {
             }
             System.out.println();
         }
-        if (obstacleGrid[0][0] ==-1){
+        if (obstacleGrid[0][0] == -1) {
             return 0;
         }
         if (m == 1 || n == 1) {
