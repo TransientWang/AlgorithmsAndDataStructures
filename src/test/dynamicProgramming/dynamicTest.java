@@ -344,6 +344,7 @@ public class dynamicTest {
     }
 
     /**
+     * @return void
      * @Description 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
      * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
      * 一、定义最优解的子结构、
@@ -359,17 +360,16 @@ public class dynamicTest {
      *              |
      *              +
      * @Param [m, n]
-     * @return void
      * @Line 357
      **/
     public void uniquePaths1(int m, int n) {
         int[][] path = new int[m][n];
 
-        for (int i = 0; i <m ; i++) {
-            path[i][0] =1;
+        for (int i = 0; i < m; i++) {
+            path[i][0] = 1;
         }
-        for (int i = 0; i <n ; i++) {
-            path[0][i] =1;
+        for (int i = 0; i < n; i++) {
+            path[0][i] = 1;
         }
         if (n > 1)
         path[0][1] = 1;
@@ -384,7 +384,7 @@ public class dynamicTest {
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                System.out.print(path[i][j]+" ");
+                System.out.print(path[i][j] + " ");
             }
             System.out.println();
         }
@@ -464,5 +464,32 @@ public class dynamicTest {
 //        }
 
         return obstacleGrid[m - 1][n - 1];
+    }
+
+    @Test
+    public void tesss() {
+        int[][] ss = {{1, 3, 1}, {1, 5, 1}};
+        System.out.println(minPathSum(ss));
+    }
+
+    public int minPathSum(int[][] grid) {
+        int[][] res = new int[grid.length][grid[0].length];
+        res[0][0] = grid[0][0];
+
+        for (int j = 1; j < grid.length; j++) {
+            res[j][0] = grid[j][0] + res[j - 1][0];
+        }
+
+        for (int i = 1; i < grid[0].length; i++) {
+            res[0][i] = grid[0][i] + res[0][i - 1];
+        }
+
+        for (int i = 1; i < grid.length; i++) {
+            for (int j = 1; j < grid[0].length; j++) {
+//                res[i][j] = res[i - 1][j] + grid[i][j] if res[x - 1][y] < res[x][y - 1] else res[x][y - 1] + grid[x][y]
+                res[i][j] = res[i - 1][j] < res[i][j - 1]?res[i - 1][j] + grid[i][j]:res[i][j - 1] + grid[i][j];
+            }
+        }
+        return res[grid.length-1][grid[0].length-1];
     }
 }
