@@ -1,5 +1,12 @@
 package test.dynamicProgramming;
 
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author wangfy
  * @Description 矩阵连乘
@@ -40,5 +47,51 @@ public class MatrixMultiplication {
         return c;
 
 
+    }
+
+    @Test
+    public void test(){
+
+    }
+    /**
+     * @Description 1000里的超级回文
+     * 1 4 9  121 484
+     * @Param [L, R]
+     * @return int
+     * @Line 52
+     **/
+    public int superpalindromesInRange() {
+        //String L, String R
+//        var list = new ArrayList<Integer>(50);
+//        for (int i = R; i >= L; i--) {
+//
+//        }
+        return (int) Math.sqrt(484);
+    }
+
+    /**
+     * @Description 两数之和 用一个map保存target - nums[i]
+     *       如果map里有nums[i]
+     *       就找到了
+     * @Param [nums, target]
+     * @return int[]
+     * @Line 76
+     **/
+    public int[] twoSum(int[] nums, int target) {
+        int[] as = new int[2];
+        Map<Integer,Integer> l = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (!l.containsKey(nums[i])){
+                l.put(target - nums[i],i);
+            }else {
+
+                as[1] = i;
+                as[0] = l.get(nums[i]);
+
+
+            }
+
+        }
+        return as;
     }
 }
