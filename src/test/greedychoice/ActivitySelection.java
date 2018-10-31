@@ -72,7 +72,7 @@ public class ActivitySelection {
 
     /**
      * @return void
-     * @Description 单元最短路径，算法时间复杂度为O（n²）,空间复杂度为常数阶O（n）
+     * @Description 单源最短路径，算法时间复杂度为O（n²）,空间复杂度为常数阶O（n）
      * map代表有向图 从i到j的权重
      * @Param [map]
      * @Line 64
@@ -112,6 +112,7 @@ public class ActivitySelection {
                     t = j;
                 }
             }
+
             //更新已走节点
             flag[t] = true;
             for (int j = 1; j < p.length; j++) {
