@@ -11,6 +11,7 @@ public class dataTest {
         MyQuque.push(1);
         MyQuque.push(2);
         MyQuque.push(3);
+
         System.out.println(MyQuque.pop());
         System.out.println(MyQuque.pop());
         System.out.println(MyQuque.pop());
