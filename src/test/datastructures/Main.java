@@ -51,9 +51,11 @@ public class Main {
             int sum = 0;
             if (l1 != null) {
                 t1 = l1.val;
+                l1 = l1.next;
             }
             if (l2 != null) {
                 t2 = l2.val;
+                l2 = l2.next;
             }
             sum = t1 + t2 + c;
 
@@ -64,18 +66,6 @@ public class Main {
                 c = 1;
                 node.val = Math.abs(10 - sum);
             }
-
-            if (l1 != null) {
-                l1 = l1.next;
-
-            }
-
-            if (l2 != null ) {
-                l2 = l2.next;
-
-
-            }
-
 
             if (l1!=null || l2 !=null) {
                 node.next = new ListNode(0);
