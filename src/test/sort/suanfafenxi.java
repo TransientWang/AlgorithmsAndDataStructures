@@ -90,15 +90,15 @@ public class suanfafenxi {
     public static void mergeSort(int[] a, int left, int right) {
         if (left < right) {
             int mid = (right + left) / 2;
-            System.out.print("子数组left:");
-            for (int i = left; i <= mid; i++) {
-                System.out.print(a[i] + " ");
-            }
-            System.out.print("子数组right:");
-            for (int i = mid + 1; i <= right; i++) {
-                System.out.print(a[i] + " ");
-            }
-            System.out.println();
+//            System.out.print("子数组left:");
+//            for (int i = left; i <= mid; i++) {
+//                System.out.print(a[i] + " ");
+//            }
+//            System.out.print("子数组right:");
+//            for (int i = mid + 1; i <= right; i++) {
+//                System.out.print(a[i] + " ");
+//            }
+//            System.out.println();
             mergeSort(a, left, mid);
             mergeSort(a, mid + 1, right);
             merge(a, left, mid, right);
@@ -106,36 +106,36 @@ public class suanfafenxi {
     }
 
     public static void merge(int[] a, int left, int mid, int right) {
-        System.out.print("合并:" + left + "-" + mid + "与" + (mid + 1) + "-" + right);
+//        System.out.print("合并:" + left + "-" + mid + "与" + (mid + 1) + "-" + right);
         int[] temp = new int[right - left + 1];
         int i = left;
         int j = mid + 1;
         int k = 0;
-        System.out.println("创建临时数组");
+//        System.out.println("创建临时数组");
         while (i <= mid && j <= right) {
             if (a[j] > a[i]) {
-                System.out.println("将a[" + i + "]放入临时数组中");
+//                System.out.println("将a[" + i + "]放入临时数组中");
                 temp[k++] = a[i++];
             } else {
-                System.out.println("将a[" + j + "]放入临时数组中");
+//                System.out.println("将a[" + j + "]放入临时数组中");
                 temp[k++] = a[j++];
             }
         }
 
         while (i <= mid) {
-            System.out.println("将左边a[" + i + "]放到临时数组中");
+//            System.out.println("将左边a[" + i + "]放到临时数组中");
             temp[k++] = a[i++];
         }
 
         while (j <= right) {
-            System.out.println("将右边a[" + j + "]放到临时数组中");
+//            System.out.println("将右边a[" + j + "]放到临时数组中");
             temp[k++] = a[j++];
         }
-        System.out.println("将临时数组中的数放回原数组中");
+//        System.out.println("将临时数组中的数放回原数组中");
         for (int l = 0; l < temp.length; l++) {
             a[l + left] = temp[l];
         }
-        System.out.println();
+//        System.out.println();
 
 
     }
@@ -166,6 +166,7 @@ public class suanfafenxi {
 
         }
         System.out.println();
+
         var k = s1.length();
         var h = s2.length();
         var stringBuilder = new StringBuilder();
@@ -324,9 +325,9 @@ public class suanfafenxi {
     public void heapSort(int[] arr) {
         int heapSize = arr.length - 1;
         buildMaxHeap(arr);
-        System.out.print("大顶堆数组：");
-        Arrays.stream(arr).forEachOrdered(o -> System.out.print(o + " "));
-        System.out.println();
+//        System.out.print("大顶堆数组：");
+//        Arrays.stream(arr).forEachOrdered(o -> System.out.print(o + " "));
+//        System.out.println();
         for (int i = arr.length - 1; i > 0; i--) {
             swap(arr, i, 0);
             heapAdjust(arr, 0, i - 1);
