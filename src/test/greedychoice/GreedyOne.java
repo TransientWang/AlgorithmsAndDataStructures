@@ -4,7 +4,7 @@ import org.junit.Test;
 
 /**
  * @author wangfy
- * @Description TODO
+ * @Description 贪心选择
  * @date 2018/10/31
  */
 
@@ -95,8 +95,8 @@ public class GreedyOne {
 
     @Test
     public void testOne() {
-        System.out.println(isMatch("mississippi",
-                "mis*is*ip*."));
+        System.out.println(isMatch("abbbbbba",
+                "ab*a"));
 
     }
 }
