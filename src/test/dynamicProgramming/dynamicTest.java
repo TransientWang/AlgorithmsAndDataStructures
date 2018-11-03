@@ -271,7 +271,7 @@ public class dynamicTest {
 
     @Test
     public void palindromeTest() {
-        String test = "w12234543221abcdcbiuoiuo";
+        String test = "bbbab";
         System.out.println(findPalindrome(test));
     }
 
@@ -291,8 +291,10 @@ public class dynamicTest {
     public String findPalindrome(String palindrome) {
         String result = "";
         String realResult = palindrome.substring(0, 1);
+
         int h = 1;
-        for (int i = 1; i < palindrome.length(); i++) {
+        for (int i = 0; i < palindrome.length(); i++) {
+
             while ((i + h) < palindrome.length() && (i - h) >= 0 && palindrome.charAt(i + h) == palindrome.charAt(i - h)) {
                 result = palindrome.substring(i - h, i + h + 1);
                 h++;
@@ -301,6 +303,7 @@ public class dynamicTest {
             h = 1;
             realResult = result.length() > realResult.length() ? result : realResult;
         }
+        System.out.println(realResult.length());
         return realResult;
     }
 
