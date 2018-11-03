@@ -1,6 +1,11 @@
 package test.greedychoice;
 
 import org.junit.Test;
+import test.testhelp.TestHelper;
+import test.testhelp.safeTest;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author wangfy
@@ -72,31 +77,64 @@ public class GreedyOne {
      * @Param [s, p]
      * @Line 68
      **/
-
-
-    public boolean isMatch(String s, String p) {
+    @safeTest()
+    public boolean myMatch(String s, String p) {
         if (p.isEmpty()) return s.isEmpty();
 
         if (p.length() == 1) return s.length() == 1 && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.');
 
         if (p.charAt(1) != '*') {
             if (s.isEmpty()) return false;
-            return (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.') && isMatch(s.substring(1), p.substring(1));
+            return (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.') && myMatch(s.substring(1), p.substring(1));
         }
 
         while (!s.isEmpty() && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.')) {
-            if (isMatch(s, p.substring(2))) return true;
+            if (myMatch(s, p.substring(2))) return true;
             s = s.substring(1);
         }
 
-        return isMatch(s,p.substring(2));
+        return myMatch(s, p.substring(2));
 
+    }
+
+    /**
+     * @return boolean
+     * @Description 给定一个字符串 (s) 和一个字符模式 (p) ，实现一个支持 '?' 和 '*' 的通配符匹配。
+     * '?' 可以匹配任何单个字符。
+     * '*' 可以匹配任意字符串（包括空字符串）。
+     * @Param [s, p]
+     * @Line 100
+     **/
+    @safeTest(1000)
+    public boolean isMatch(String s, String p) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int testHelps(long time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return (int) time;
     }
 
     @Test
     public void testOne() {
-        System.out.println(isMatch("abbbbbba",
-                "ab*a"));
+
+        Object[] params = new Object[]{new String[]{"1","2"}
+                , new String[]{"3","4"}, new String[]{"5","6"}, new String[]{"7","8"}};
+        Object[] param1s = new Object[]{100L
+                ,100L};
+        Object[] param1ss = new Object[]{"dad"
+                ,"sdawd"};
+        TestHelper.caseTest(getClass(), "isMatch", params);
+
 
     }
 }
