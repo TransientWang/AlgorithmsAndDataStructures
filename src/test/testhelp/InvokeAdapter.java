@@ -3,6 +3,10 @@ package test.testhelp;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author wangfy
@@ -11,6 +15,9 @@ import java.lang.reflect.Method;
  */
 
 public class InvokeAdapter {
+
+    ExecutorService executorService = Executors.newCachedThreadPool();
+
     public static void Invoke(Method method, Object o, Object... args) throws Exception {
 
         Annotation annotation = null;
@@ -52,14 +59,14 @@ public class InvokeAdapter {
     private static void safeInvoke(Method method, long overTime, Object o, Object... args) throws Exception {
         Object lock = new Object();
         Runnable runnable = new InvokeAdapter.HelpRunnables(lock, method, o, args);
-        Thread thread = new Thread(runnable);
-        thread.setDaemon(true);
-        thread.start();
+        Thread tThread = new Thread(runnable);
+        tThread.setDaemon(true);
+        tThread.start();
         synchronized (lock) {
             lock.wait(overTime);
         }
-        if (thread.isAlive()) {
-            System.out.println("运行超时");
+        if (tThread.isAlive()) {
+            tThread.stop();
         }
 
 
@@ -67,23 +74,24 @@ public class InvokeAdapter {
 
     private static void USafeInvoke(Method method, Object o, Object... args) {
         long startTime = System.currentTimeMillis();
+        Class[] types = method.getParameterTypes();
         System.out.print("开始测试：" + method.getName() + " 方法" +
                 "测试用例：");
-        Class[] types = method.getParameterTypes();
         for (int i = 0; i < types.length; i++) {
             System.out.print(types[i].getName() + ":" + args[i] + "   ");
         }
-
         System.out.println();
+
         try {
             System.out.println("结果:" + method.invoke(o, args));
+            long endTime = System.currentTimeMillis();
+            System.out.println("耗时:" + (endTime - startTime) + " Millis");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            System.out.println("运行超时");
         }
-        long endTime = System.currentTimeMillis();
-        System.out.println("耗时:" + (endTime - startTime) + " Millis");
+
 
     }
 
