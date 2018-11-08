@@ -1,5 +1,6 @@
 package test.datastructures;
 
+import com.sun.source.tree.Tree;
 import org.junit.Test;
 
 import java.util.*;
@@ -112,6 +113,12 @@ public class TreeOne {
 
     }
 
+    /**
+     * @return boolean
+     * @Description 对称二叉树
+     * @Param [root]
+     * @Line 119
+     **/
     public boolean isSymmetricOne(TreeNode root) {
 
         Queue<TreeNode> queue = new LinkedList<>();
@@ -131,6 +138,31 @@ public class TreeOne {
         return true;
     }
 
+    /**
+     * @return test.datastructures.TreeNode
+     * @Description 将有序数组转换为二叉搜索树
+     * @Param [nums]
+     * @Line 144
+     **/
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if (nums == null || nums.length == 0)
+            return null;
+        return getTree(nums, 0, nums.length - 1);
+    }
+
+    public TreeNode getTree(int[] nums, int l, int r) {
+        if (l <= r) {
+            int mid = (l + r) / 2;
+            TreeNode node = new TreeNode(nums[mid]);
+            node.left = getTree(nums, l, mid - 1);
+            node.right = getTree(nums, mid + 1, r);
+            return node;
+
+        }else
+        return null;
+
+    }
+
     @Test
     public void testTwo() {
         TreeNode root = new TreeNode(10);
@@ -138,6 +170,9 @@ public class TreeOne {
 //        root.right = new TreeNode(15);
 //        root.right.left = new TreeNode(6);
 //        root.right.right = new TreeNode(20);
-        System.out.println(isValidBST(root));
+//        System.out.println(isValidBST(root));
+
+        System.out.println(DFS(sortedArrayToBST(new int[]{-1, 0, 1, 2})));
+        ;
     }
 }
