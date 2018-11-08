@@ -150,6 +150,13 @@ public class TreeOne {
         return getTree(nums, 0, nums.length - 1);
     }
 
+    /**
+     * @Description 思路:采用二分法来创建平衡二叉树，根结点刚好为数组中间的节点，根节点的左子树的根是数组左边部分的中间节点，
+     * 根节点的右子树是数据右边部分的中间节点；代码执行结果和示例给出结果不同，但满足平衡二叉树。
+     * @Param [nums, l, r]
+     * @return test.datastructures.TreeNode
+     * @Line 157
+     **/
     public TreeNode getTree(int[] nums, int l, int r) {
         if (l <= r) {
             int mid = (l + r) / 2;
