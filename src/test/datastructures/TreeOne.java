@@ -3,6 +3,8 @@ package test.datastructures;
 import org.junit.Test;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 
@@ -55,4 +57,89 @@ public class TreeOne {
         return deepth;
     }
 
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        List<List<Integer>> lists = new ArrayList<>();
+
+        if (root == null) return lists;
+
+        queue.offer(root);
+        List<Integer> tmp = new ArrayList<>(1);
+        tmp.add(root.val);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> t = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+
+                TreeNode tmpNode = queue.poll();
+                t.add(tmpNode.val);
+                if (tmpNode.left != null)
+                    queue.offer(tmpNode.left);
+                if (tmpNode.right != null)
+                    queue.offer(tmpNode.right);
+            }
+            lists.add(t);
+        }
+        return lists;
+    }
+
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) return true;
+        Queue<Integer> queue = new ArrayDeque<>();
+        find(root, queue);
+        int tmp = queue.poll();
+        while (!queue.isEmpty()) {
+            int t = queue.poll();
+            if (t <= tmp) return false;
+            tmp = t;
+        }
+        return true;
+    }
+
+    public void find(TreeNode root, Queue<Integer> queue) {
+        if (root == null) return;
+        if (root.left != null) find(root.left, queue);
+        queue.offer(root.val);
+        if (root.right != null) find(root.right, queue);
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+
+        return isMirror(root, root);
+    }
+
+    public boolean isMirror(TreeNode t1, TreeNode t2) {
+        if (t1 == null && t2 == null) return true;
+        if (t1 == null || t2 == null) return false;
+        return (t1.val == t2.val) && isMirror(t1.right, t2.left) && isMirror(t1.left, t2.right);
+
+    }
+
+    public boolean isSymmetricOne(TreeNode root) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.offer(root);
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode t1 = queue.poll();
+            TreeNode t2 = queue.poll();
+            if (t1 == null && t2 == null) return true;
+            if (t1 == null || t2 == null) return false;
+            if (t1.val != t2.val) return false;
+            queue.offer(t1.left);
+            queue.offer(t2.right);
+            queue.offer(t1.right);
+            queue.offer(t2.left);
+        }
+        return true;
+    }
+
+    @Test
+    public void testTwo() {
+        TreeNode root = new TreeNode(10);
+        root.left = new TreeNode(10);
+//        root.right = new TreeNode(15);
+//        root.right.left = new TreeNode(6);
+//        root.right.right = new TreeNode(20);
+        System.out.println(isValidBST(root));
+    }
 }
