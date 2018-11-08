@@ -67,6 +67,9 @@ public class DPTwo {
     /**
      * @return int
      * @Description 打家劫舍
+     * 这这个方法的思想 是挨家挨户都偷一遍
+     * 偷当前户的时候 选出从第一户到 前两户能偷得的最大值
+     * 求得得最大値与当前户相加
      * @Param [nums]
      * @Line 71
      **/
@@ -86,14 +89,25 @@ public class DPTwo {
         return Math.max(dp[nums.length - 2], dp[nums.length - 1]);
     }
 
+    /**
+     * @return int
+     * @Description 打家劫舍
+     * 动态规划思想
+     * dp数组保存小偷 偷到第几户 能得到的最大财产
+     * 如果偷当前户 加上 前两户之前得到的最大值
+     * 比 不偷当前户（不偷当前户的所能得到的最大值，跟偷前一户的一样）
+     * 大就偷当前的 ，否则就不偷当前的
+     * @Param [nums]
+     * @Line 92
+     **/
     public int robTwo(int[] nums) {
         if (nums.length == 0) return 0;
         if (nums.length == 1) return nums[0];
         int[] dp = new int[nums.length];
         dp[0] = nums[0];
-        dp[1] = Math.max(dp[0], dp[1]);
+        dp[1] = Math.max(nums[0], nums[1]);
         for (int i = 2; i < dp.length; i++) {
-            dp[i] = Math.max(dp[i - 2] + nums[i], dp[i]);
+            dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
         }
 
         return dp[nums.length - 1];
@@ -103,6 +117,6 @@ public class DPTwo {
 
     @Test
     public void testOne() {
-        System.out.println(robTwo(new int[]{2, 7, 9, 3, 1}));
+        System.out.println(robTwo(new int[]{1, 2, 3, 1}));
     }
 }
