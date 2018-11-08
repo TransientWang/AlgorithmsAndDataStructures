@@ -126,12 +126,12 @@ public class GreedyOne {
     @Test
     public void testOne() {
 
-        Object[] params = new Object[]{new String[]{"1","2"}
-                , new String[]{"3","4"}, new String[]{"5","6"}, new String[]{"7","8"}};
+        Object[] params = new Object[]{new String[]{"1", "2"}
+                , new String[]{"3", "4"}, new String[]{"5", "6"}, new String[]{"7", "8"}};
         Object[] param1s = new Object[]{100L
-                ,100L};
+                , 100L};
         Object[] param1ss = new Object[]{"dad"
-                ,"sdawd"};
+                , "sdawd"};
         TestHelper.caseTest(getClass(), "isMatch", params);
 
 
@@ -139,10 +139,10 @@ public class GreedyOne {
 
 
     /**
-     * @Description
-     * 给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0
+     * @return java.util.List<java.util.List<java.lang.Integer>>
+     * @Description 给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0
      * ？找出所有满足条件且不重复的三元组。
-     *
+     * <p>
      * 那么我们来分析一下这道题的特点，要我们找出三个数且和为0，那么除了三个数全是0的情况之外，
      * 肯定会有负数和正数，我们还是要先fix一个数，然后去找另外两个数，
      * 我们只要找到两个数且和为第一个fix数的相反数就行了，既然另外两个数不能使用Two Sum的那种解法来找，
@@ -163,7 +163,6 @@ public class GreedyOne {
      * 使得指向的数字增大一些。同理，如果两数之和大于target，则我们将右边那个指针j左移一位，
      * 使得指向的数字减小一些
      * @Param [nums]
-     * @return java.util.List<java.util.List<java.lang.Integer>>
      * @Line 294
      **/
     public List<List<Integer>> threeSumOne(int[] nums) {
@@ -197,4 +196,6 @@ public class GreedyOne {
         }
         return res;
     }
+
+
 }

@@ -21,7 +21,7 @@ public class test {
         }
         Arrays.stream(a).forEachOrdered(var -> System.out.print(var + " "));
         System.out.println();
-        System.out.println(randomizedSelect(a, 0, a.length - 1, 434));
+//        System.out.println(randomizedSelect(a, 0, a.length - 1, 434));
         Arrays.stream(a).sorted().forEachOrdered(var -> System.out.print(var + " "));
 
     }
@@ -40,17 +40,17 @@ public class test {
      * k代表第k小的数
      * @Line 15
      **/
-    public int randomizedSelect(int a[], int left, int right, int k) {
+    public void randomizedSelect(int a[], int left, int right, int k) {
         if (left >= right) {
-            return a[left];
+            return;
         }
         int i, j, temp;
         int cur = a[left];
         i = left;
         j = right;
         while (i != j) {
-            while (i < j && a[j] >= cur) j--;
-            while (i < j && a[i] <= cur) i++;
+            while (i < j && a[j] <= cur) j--;
+            while (i < j && a[i] >= cur) i++;
             if (i < j) {
                 temp = a[j];
                 a[j] = a[i];
@@ -59,31 +59,24 @@ public class test {
         }
         a[left] = a[j];
         a[j] = cur;
-        //先进行了常规的插入排序
-        System.out.print("结果 " + left + "-" + right + ":");
-        Arrays.stream(a).forEachOrdered(var -> System.out.print(var + " "));
-        System.out.println();
-        //接下来是判断第K小个数在哪里
-        if (left + k == j + 1) {
-            //第一种请况，判断K是否与哨兵相等，相等的话就返回哨兵的位置
-            //不相等的话那么K就在哨兵的左边或者右边了
-            //由于K是从1开始的，哨兵是从0开始的，所以把哨兵数加一
-            return a[j];
-        } else if (left + k <= j) {
-            //如果k在哨兵的左边，也就是说明锁边的数量一定大于
-            // k，这是对左边进行插入排序则可以找到第k小的数
-//            return insertSort(a, left, j, k);
-
-            //对左边与右边进行相同的递归就好了。
-            //但是注意一下判断条件里k要加上左边界。
-            return randomizedSelect(a, left, j, k);
-        } else {
-            //如果在右边，则说明，(j+1）个最小的数已经在左边了，那么剩下的最小的k-(j+1)
-            //个数就在右边找就好了
-            return randomizedSelect(a, j + 1, right, k - j - 1);
-        }
 
 
+    }
+
+    @Test
+    public void ttt() {
+        int[] n1 = {1, 3};
+        int[] n2 = {2};
+
+    }
+
+
+
+    @Test
+    public void tests111() {
+        int[] a = {7, 6, 5, 4, 3, 2, 1};
+        randomizedSelect(a, 0, a.length - 1, 5);
+        Arrays.stream(a).forEachOrdered(o -> System.out.print(o + " "));
     }
 
     /**
@@ -97,7 +90,7 @@ public class test {
         for (int i = left + 1; i <= right; i++) {
             int temp = a[i];
             j = i - 1;
-            while (j >= left && a[j] > temp) {
+            while (j >= left && a[j] < temp) {
                 a[j + 1] = a[j];
                 j--;
             }
@@ -111,7 +104,7 @@ public class test {
 
     @Test
     public void test1() {
-        int[] arrs = {3,2,3};
+        int[] arrs = {3, 2, 3};
         System.out.println(majorityElement(arrs));
 
     }
@@ -132,15 +125,15 @@ public class test {
      * @Line 117
      **/
     public int majorityElement(int[] nums) {
-        int count =1;
+        int count = 1;
         int num = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            if (num == nums[i]){
+            if (num == nums[i]) {
                 count++;
-            }else {
-                count --;
+            } else {
+                count--;
             }
-            if (count ==0){
+            if (count == 0) {
                 num = nums[i];
                 count = 1;
             }
@@ -148,7 +141,24 @@ public class test {
         return num;
     }
 
-
+    class Solution {
+        public int maxProfit(int[] prices) {
+            int i = 0;
+            int valley = prices[0];
+            int peak = prices[0];
+            int maxprofit = 0;
+            while (i < prices.length - 1) {
+                while (i < prices.length - 1 && prices[i] >= prices[i + 1])
+                    i++;
+                valley = prices[i];
+                while (i < prices.length - 1 && prices[i] <= prices[i + 1])
+                    i++;
+                peak = prices[i];
+                maxprofit += peak - valley;
+            }
+            return maxprofit;
+        }
+    }
 
 
 }

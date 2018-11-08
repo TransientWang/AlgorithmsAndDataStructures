@@ -3,6 +3,7 @@ package test.greedychoice;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author wangfy

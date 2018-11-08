@@ -39,10 +39,11 @@ public class InvokeAdapter {
             overTime = ((safeTest) annotation).value();
 
         if (overTime == 0L) {
+
             for (int j = 0; j < args.length; j++) {
                 if (args[j].getClass().isArray()) {
                     Object[] arg = (Object[]) args[j];
-                    USafeInvoke(method, o, arg);
+
                 } else {
                     Object arg = args[j];
                     USafeInvoke(method, o, arg);

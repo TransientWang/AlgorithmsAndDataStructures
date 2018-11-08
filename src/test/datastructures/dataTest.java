@@ -1,8 +1,14 @@
 package test.datastructures;
 
+import com.sun.source.tree.IfTree;
 import org.junit.Test;
 
+
+import java.util.Queue;
 import java.util.Stack;
+
+import java.util.concurrent.ArrayBlockingQueue;
+
 
 public class dataTest {
 
@@ -108,7 +114,7 @@ public class dataTest {
         }
     }
 
-    class treeNode<T extends Number> {
+  private   class treeNode<T extends Number> {
         int type;
 
         public treeNode(int type) {

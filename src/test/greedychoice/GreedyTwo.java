@@ -61,6 +61,8 @@ public class GreedyTwo {
      * @Line 59
      **/
     public boolean containsDuplicate(int[] nums) {
+        String s ="dawdaw";
+        s.indexOf("l");
         if (nums.length == 0) {
             return false;
         }

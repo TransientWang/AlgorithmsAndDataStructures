@@ -76,19 +76,23 @@ public class backtracking {
         if (t > n) {
             //将当前最优步数值赋值给bestx
             //保存当前最优解
+
             for (int i = 0; i <= n; i++) {
                 bestx[i] = x[i];
 
             }
+            bestp = cp;
+
+
             //将当前最优值赋值给bestp
             //保存当前最优值
-            bestp = cp;
             System.out.println(bestp);
             Arrays.stream(bestx).forEachOrdered(var -> System.out.print(var + " "));
             System.out.println();
+
             return;
         }
-        //如果当前总重量+下一个物品的重量 大于总重量
+        //如果当前总重量+下一个物品的重量 小于总重量
         if (cw + weight[t] <= w) {
             //当前节点可以选择
             x[t] = 1;
