@@ -158,7 +158,7 @@ public class TreeOne {
             node.right = getTree(nums, mid + 1, r);
             return node;
 
-        }else
+        }
         return null;
 
     }
