@@ -2,10 +2,7 @@ package test.datastructures;
 
 import org.junit.Test;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 
 /**
@@ -116,19 +113,20 @@ public class TreeOne {
     }
 
     public boolean isSymmetricOne(TreeNode root) {
-        Queue<TreeNode> queue = new ArrayDeque<>();
-        queue.offer(root);
-        queue.offer(root);
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        queue.add(root);
         while (!queue.isEmpty()) {
             TreeNode t1 = queue.poll();
             TreeNode t2 = queue.poll();
             if (t1 == null && t2 == null) return true;
             if (t1 == null || t2 == null) return false;
             if (t1.val != t2.val) return false;
-            queue.offer(t1.left);
-            queue.offer(t2.right);
-            queue.offer(t1.right);
-            queue.offer(t2.left);
+            queue.add(t1.left);
+            queue.add(t2.right);
+            queue.add(t1.right);
+            queue.add(t2.left);
         }
         return true;
     }
