@@ -12,37 +12,41 @@ import java.lang.reflect.Method;
 
 public class USafeTest implements Test {
 
+
     @Override
     public void USafeInvoke(Method method, Object o, Object... args) {
+        StringBuilder stringBuilder = new StringBuilder();
         long startTime = System.currentTimeMillis();
         Class[] types = method.getParameterTypes();
-        System.out.print("开始测试：" + method.getName() + " 方法" +
-                "测试用例：");
+        stringBuilder.append("测试方法：" + method.getName() + " 测试用例：");
         for (int i = 0; i < types.length; i++) {
             if (args[i].getClass().isArray()) {
-                System.out.print("[ ");
+                stringBuilder.append("[ ");
                 for (int j = 0; j < Array.getLength(args[i]); j++) {
-                    if (j != Array.getLength(args[i])) {
-                        System.out.print(Array.get(args[i], j) + ",");
+                    if (j != Array.getLength(args[i])-1) {
+                        stringBuilder.append(Array.get(args[i], j) + ",");
                     } else {
-                        System.out.print(Array.get(args[i], j));
+                        stringBuilder.append(Array.get(args[i], j));
                     }
                 }
-                System.out.print("]  ");
+                stringBuilder.append("]  ");
             } else {
-                System.out.print(types[i].getName() + ":" + args[i] + "   ");
+                stringBuilder.append(types[i].getName() + ":" + args[i] + "   ");
             }
         }
-        System.out.println();
+        stringBuilder.append("\r\n");
 
         try {
-            System.out.println("结果:" + method.invoke(o, args));
+            stringBuilder.append("结果:" + method.invoke(o, args) + "\r\n");
             long endTime = System.currentTimeMillis();
-            System.out.println("耗时:" + (endTime - startTime) + " Millis");
+            stringBuilder.append("耗时:" + (endTime - startTime) + " Millis\r\n");
+            System.out.println(stringBuilder.toString());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+
         } catch (InvocationTargetException e) {
             System.out.println("运行超时");
+
         }
 
     }

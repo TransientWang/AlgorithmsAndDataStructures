@@ -20,9 +20,8 @@ public enum ThreadPoolSinglton {
             new LinkedBlockingQueue<>(), new ThreadFactory() {
         @Override
         public Thread newThread(Runnable r) {
-            System.out.println("创建线程");
             Thread deamonThread = new Thread(r);
-            deamonThread.setDaemon(true);
+//            deamonThread.setDaemon(true);
             return deamonThread;
         }
     });

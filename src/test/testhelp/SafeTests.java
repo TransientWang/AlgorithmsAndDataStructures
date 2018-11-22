@@ -1,6 +1,10 @@
 package test.testhelp;
 
+import javax.print.attribute.standard.NumberUp;
 import java.lang.reflect.Method;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.*;
 
 /**
  * @author wangfy
@@ -10,39 +14,28 @@ import java.lang.reflect.Method;
 
 public class SafeTests extends USafeTest {
 
-    public  void safeInvoke(Method method, long overTime, Object o, Object... args) throws Exception {
-        Object lock = new Object();
-        Runnable runnable = new HelpRunnables(lock, method, o, args);
-        Thread tThread = new Thread(runnable);
-        tThread.setDaemon(true);
-        tThread.start();
-        synchronized (lock) {
-            lock.wait(overTime);
-        }
-        if (tThread.isAlive()) {
-            tThread.stop();
-        }
-    }
+    ExecutorService executor = Executors.newFixedThreadPool(1);
 
-    private class HelpRunnables implements Runnable {
-
-        Object lock;
-        Method method;
-        Object o;
-        Object[] args;
-
-        public HelpRunnables(Object lock, Method method, Object o, Object[] args) {
-            this.lock = lock;
-            this.method = method;
-            this.o = o;
-            this.args = args;
-        }
-
-        public void run() {
-            USafeInvoke(method, o, args);
-            synchronized (lock) {
-                lock.notify();
+    public void safeInvoke(Method method, long overTime, Object o, Object... args) throws Exception {
+        var futureTask = new FutureTask<Void>(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                USafeInvoke(method, o, args);
+                return null;
             }
+        });
+
+        executor.submit(futureTask);
+        try {
+            futureTask.get(overTime, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            System.out.println("运行超时");
         }
+        executor.shutdown();
     }
+
 }

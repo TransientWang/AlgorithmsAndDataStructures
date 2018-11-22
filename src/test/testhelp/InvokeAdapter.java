@@ -1,12 +1,8 @@
 package test.testhelp;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author wangfy
@@ -16,7 +12,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 public class InvokeAdapter {
 
-    ExecutorService executorService = Executors.newCachedThreadPool();
+    ExecutorService executorService = ThreadPoolSinglton.CACHETHREADPOOL.getThreadPool();
 
     public static void Invoke(Method method, Object o, Object... args) throws Exception {
 
@@ -58,7 +54,6 @@ public class InvokeAdapter {
 //            }
 //        }
 //    }
-
 
 
 }
