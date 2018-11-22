@@ -1,9 +1,6 @@
 package test.testhelp;
 
-import javax.print.attribute.standard.NumberUp;
 import java.lang.reflect.Method;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.*;
 
 /**
