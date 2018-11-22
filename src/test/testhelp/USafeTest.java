@@ -1,5 +1,6 @@
 package test.testhelp;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -18,7 +19,19 @@ public class USafeTest implements Test {
         System.out.print("开始测试：" + method.getName() + " 方法" +
                 "测试用例：");
         for (int i = 0; i < types.length; i++) {
-            System.out.print(types[i].getName() + ":" + args[i] + "   ");
+            if (args[i].getClass().isArray()) {
+                System.out.print("[ ");
+                for (int j = 0; j < Array.getLength(args[i]); j++) {
+                    if (j != Array.getLength(args[i])) {
+                        System.out.print(Array.get(args[i], j) + ",");
+                    } else {
+                        System.out.print(Array.get(args[i], j));
+                    }
+                }
+                System.out.print("]  ");
+            } else {
+                System.out.print(types[i].getName() + ":" + args[i] + "   ");
+            }
         }
         System.out.println();
 
