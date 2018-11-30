@@ -2,7 +2,12 @@ package test.backtracking;
 
 import org.junit.Test;
 
+import java.lang.reflect.Proxy;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.concurrent.atomic.LongAdder;
+import java.util.concurrent.locks.ReentrantLock;
+
 
 /**
  * @author wangfy
@@ -14,9 +19,10 @@ public class backtracking {
 
     @Test
     public void test() {
+
         int[] w = {2, 5, 4, 2};
         int[] v = {6, 3, 5, 4};
-        bagSolution(10, w, v);
+//        bagSolution(10, w, v);
     }
 
     /**

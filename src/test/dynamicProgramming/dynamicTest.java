@@ -2,6 +2,9 @@ package test.dynamicProgramming;
 
 
 import org.junit.Test;
+import test.testhelp.TestHelper;
+import test.testhelp.safeTest;
+
 import java.util.Arrays;
 
 
@@ -77,16 +80,18 @@ public class dynamicTest {
     public void test2() {
         int[] v = {8, 10, 6, 3, 7, 2};
         int[] w = {4, 6, 2, 2, 5, 1};
-        System.out.println(bagSolution(w, v, 12));
+//        System.out.println(bagSolution(w, v, 12));
+        TestHelper.test(getClass(),"bagSolution",w, v, 12);
     }
 
     /**
      * @return void
      * @Description 0-1背包问题
-     * w:物品的重量  v:物品的价值 j:背包的容量
+     * w:物品的重量  v:物品的价值 j: 背包的容量
      * @Param [w, v, j]
      * @Line 77
      **/
+    @safeTest(40)
     public int bagSolution(int[] w, int[] v, int j) {
 
         if (w.length > 0 && w[0] > j) {

@@ -132,7 +132,7 @@ public class GreedyOne {
                 , 100L};
         Object[] param1ss = new Object[]{"dad"
                 , "sdawd"};
-        TestHelper.caseTest(getClass(), "isMatch", params);
+
 
 
     }
@@ -141,8 +141,8 @@ public class GreedyOne {
     /**
      * @return java.util.List<java.util.List<java.lang.Integer>>
      * @Description 给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0
-     * ？找出所有满足条件且不重复的三元组。
-     * <p>
+     *找出所有满足条件且不重复的三元组。
+     *
      * 那么我们来分析一下这道题的特点，要我们找出三个数且和为0，那么除了三个数全是0的情况之外，
      * 肯定会有负数和正数，我们还是要先fix一个数，然后去找另外两个数，
      * 我们只要找到两个数且和为第一个fix数的相反数就行了，既然另外两个数不能使用Two Sum的那种解法来找，

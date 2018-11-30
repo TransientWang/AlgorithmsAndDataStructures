@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static java.lang.System.out;
 
@@ -325,6 +325,7 @@ public class suanfafenxi {
     public void heapSort(int[] arr) {
         int heapSize = arr.length - 1;
         buildMaxHeap(arr);
+
 //        System.out.print("大顶堆数组：");
 //        Arrays.stream(arr).forEachOrdered(o -> System.out.print(o + " "));
 //        System.out.println();
