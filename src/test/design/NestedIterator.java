@@ -7,6 +7,8 @@ import java.util.*;
  * @Description 扁平化嵌套列表迭代器
  * 给定一个嵌套的整型列表。设计一个迭代器，使其能够遍历这个整型列表中的所有整数。
  * 列表中的项或者为一个整数，或者是另一个列表。
+ * 直接将列表里的数字，放到一个stack中。
+ * 用双端队列，因为Stack类是由Vector实现的性能不好。
  * @date 2018/12/3
  **/
 public class NestedIterator implements Iterator<Integer> {
@@ -31,12 +33,14 @@ public class NestedIterator implements Iterator<Integer> {
     }
 
 
-    ArrayDeque<Integer> stack = new ArrayDeque<>();
-    Iterator<Integer> integerIterator;
+    private ArrayDeque<Integer> stack = new ArrayDeque<>();
+    private Iterator<Integer> integerIterator;
+    private int sum = 0;
+    private int cur = 0;
 
     public NestedIterator(List<NestedInteger> nestedList) {
         add(nestedList);
-        integerIterator = stack.iterator();
+        sum = stack.size();
     }
 
     private void add(List<NestedInteger> list) {
@@ -52,12 +56,12 @@ public class NestedIterator implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        return integerIterator.hasNext();
+        return !stack.isEmpty();
     }
 
     @Override
     public Integer next() {
-        return integerIterator.next();
+        return stack.pollFirst();
     }
 
     public static class NestedInteger {
@@ -73,19 +77,17 @@ public class NestedIterator implements Iterator<Integer> {
         private List<NestedInteger> nestedIntegerList;
         private Integer val;
 
-        // @return true if this NestedInteger holds a single integer, rather than a nested list.
+
         public boolean isInteger() {
             return val != null;
         }
 
-        // @return the single integer that this NestedInteger holds, if it holds a single integer
-        // Return null if this NestedInteger holds a nested list
+
         public Integer getInteger() {
             return val;
         }
 
-        // @return the nested list that this NestedInteger holds, if it holds a nested list
-        // Return null if this NestedInteger holds a single integer
+
         public List<NestedInteger> getList() {
             return nestedIntegerList;
         }
