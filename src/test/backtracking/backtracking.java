@@ -2,11 +2,10 @@ package test.backtracking;
 
 import org.junit.Test;
 
-import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.concurrent.atomic.LongAdder;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -17,13 +16,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class backtracking {
 
-    @Test
-    public void test() {
-
-        int[] w = {2, 5, 4, 2};
-        int[] v = {6, 3, 5, 4};
-//        bagSolution(10, w, v);
-    }
 
     /**
      * @return void
@@ -121,5 +113,77 @@ public class backtracking {
         }
 
 
+    }
+
+    /**
+     * 282. 给表达式添加运算符
+     *
+     * @return java.util.List<java.lang.String>
+     * @date 2019/2/12 17:38
+     * @Description
+     * @Param [num, target]
+     **/
+    public List<String> addOperators(String num, int target) {
+        if (num.length() == 0) {
+            return Collections.emptyList();
+        }
+        if (num.length() == 1) {
+            if (Integer.valueOf(num) == target) {
+                return Arrays.asList(num);
+            }
+        }
+        int[] nums = new int[num.length()];
+        for (int i = 0; i < num.length(); i++) {
+            nums[i] = Integer.valueOf(num.charAt(i) - 48);
+        }
+        List<String> res = new ArrayList<>();
+        dfs(res, target, nums, 1, String.valueOf(nums[0]), 0, nums[0], nums[0]);
+
+        return res;
+    }
+
+    /**
+     * @return void
+     * @date 2019/2/12 17:38
+     * @Description
+     * @Param [res, target, num, i, expr, preSum, pre, cur]
+     **/
+    private void dfs(List<String> res, int target, int[] num, int i, String expr, long preSum, long pre, long cur) {
+        if (i == num.length - 1) {
+            if (preSum + pre + num[i] == target) {
+                res.add(expr + "+" + String.valueOf(num[i]));
+            }
+            if (preSum + pre - num[i] == target) {
+                res.add(expr + "-" + String.valueOf(num[i]));
+            }
+            if (preSum + pre * num[i] == target) {
+                res.add(expr + "*" + String.valueOf(num[i]));
+            }
+//             preProd = pre/cur
+//            new_prod = preProd *(curr * 10+num[i]) = 10 * pre + pre / cur * num[i]
+
+            if (cur != 0 && (pre / cur * num[i] + preSum) == target - (10 * pre)) {
+
+                res.add(expr + String.valueOf(num[i]));
+            }
+        } else {
+            dfs(res, target, num, i + 1, expr + "+" + String.valueOf(num[i]), pre + preSum, num[i], num[i]);
+            dfs(res, target, num, i + 1, expr + "-" + String.valueOf(num[i]), pre + preSum, -num[i], num[i]);
+            dfs(res, target, num, i + 1, expr + "*" + String.valueOf(num[i]), preSum, pre * num[i], num[i]);
+            if (cur != 0) {
+                dfs(res, target, num, i + 1, expr + String.valueOf(num[i]), preSum, 10 * pre + pre / cur * num[i], 10 * cur + num[i]);
+            }
+        }
+    }
+
+
+    @Test
+    public void test() {
+        int[] w = {2, 5, 4, 2};
+        int[] v = {6, 3, 5, 4};
+        List<String> list = addOperators("2147483648", -2147483648);
+        list.forEach(var -> System.out.println(var));
+
+//        bagSolution(10, w, v);
     }
 }
