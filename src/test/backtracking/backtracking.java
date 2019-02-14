@@ -2,10 +2,7 @@ package test.backtracking;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -176,7 +173,63 @@ public class backtracking {
         }
     }
 
+    /**
+     * 218.天际线问题
+     *
+     * @return java.util.List<int   [   ]>
+     * @date 2019/2/14 11:46
+     * @Description TODO
+     * @Param [buildings]
+     **/
+    public static List<int[]> getSkyline(int[][] buildings) {
+        List<int[]> res = new ArrayList<>();
+        res.add(new int[]{0, 0});
+        int[][] list = new int[buildings.length * 2][];
+        int idx = 0;
+        //L R H
+        for (int i = 0; i < buildings.length; i++) {
+            int[] building = buildings[i];
+            building[2] = -building[2];
+            list[idx] = building;
+            idx += 1;
+            int[] nbuilding = new int[]{building[1], 0, 0};
+            list[idx] = nbuilding;
+            idx += 1;
+        }
+        Arrays.sort(list, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
 
+                if (o1[0] - o2[0] == 0) {
+                    return (o1[2] - o2[2]);
+                }
+                return o1[0] - o2[0];
+            }
+        });
+        Queue<float[]> heap = new PriorityQueue<>(new Comparator<float[]>() {
+            @Override
+            public int compare(float[] o1, float[] o2) {
+
+                return (int) (o1[1] - o2[1]);
+            }
+        });
+        heap.add(new float[]{Float.MAX_VALUE, 0f});//{坐标，高度}
+        for (int[] ints : list) {
+            while (ints[0] >= heap.peek()[0]) {
+                heap.poll();
+            }
+            if (ints[2] != 0) {
+                heap.offer(new float[]{ints[1], ints[2]});
+            }
+            if (res.get(res.size() - 1)[1] + heap.peek()[1] != 0) {
+                res.add(new int[]{ints[0], (int) -heap.peek()[1]});
+
+            }
+
+        }
+        res.remove(0);
+        return res;
+    }
     @Test
     public void test() {
         int[] w = {2, 5, 4, 2};
