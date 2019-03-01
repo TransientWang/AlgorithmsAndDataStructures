@@ -1,13 +1,18 @@
 package wfy.sort;
 
 import org.junit.Test;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
-import static java.lang.System.out;
 import java.util.Random;
+
+import static java.lang.System.out;
 
 public class suanfafenxi {
     @Test
@@ -108,8 +113,8 @@ static  int m;
         int[] temp = new int[right - left +1];
         int i = left;
         int j = mid + 1;
-        int k = 0;
         System.out.println("创建临时数组");
+        int k = 0;
         while (i <= mid && j <= right) {
             if (a[j] > a[i]) {
                 System.out.println("将a["+i+"]放入临时数组中");
