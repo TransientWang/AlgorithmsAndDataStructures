@@ -2,23 +2,46 @@ package test.sort;
 
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.*;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.Arrays;
+import java.util.Random;
 
 import static java.lang.System.out;
 
 public class suanfafenxi {
     @Test
     public void PrintFibonacci() {
-        Fibonacci(10);
+
+//        Fibonacci(10);
+        renameFile("C:\\Users\\扶摇\\Desktop\\domt-master\\WebRoot\\WEB-INF\\pages", "jsp", "html");
     }
+
+    public void renameFile(String path, final String oldPrefix, final String newPrefix) {
+        File oldFile = new File(path);
+        if (oldFile.isFile()) {
+            dealWithFile(oldFile, oldPrefix, newPrefix);
+        } else {
+            File[] files = oldFile.listFiles();
+            for (int i = 0; i < files.length; i++) {
+                renameFile(path +File.separatorChar+ files[i].getName(), oldPrefix, newPrefix);
+            }
+        }
+    }
+
+    public void dealWithFile(File oldFile, String oldPrefix, String newPrefix) {
+        if (oldFile.isFile() && oldFile.getName().endsWith(oldPrefix)) {
+            String absPath = oldFile.getAbsolutePath();
+            String newName = absPath.substring(0, absPath.lastIndexOf(".")) + "." + newPrefix;
+            out.println(newName);
+            out.println(oldFile.renameTo(new File(newName)));
+        }
+
+
+    }
+
 
     /**
      * 斐波那契数列
@@ -320,6 +343,7 @@ public class suanfafenxi {
      * 这样现在最大值就在外面了，但是现在堆不满足最大堆了。
      * 3、需要重新调整（直接从堆顶开始调整）
      * 然后重复，2,3,步骤知道堆缩小到只有一个元素为止
+     *
      * @param arr
      */
     public void heapSort(int[] arr) {
@@ -347,6 +371,8 @@ public class suanfafenxi {
     //左右叶子节点变换后都需要重新调整，因为两个叶子节点都有可能不满足条件需要调整
     private static void heapAdjust(int[] a, int index, int heapSize) {
         int left, right, largest;
+
+
         left = (index * 2) + 1;   //左孩子
         right = (index * 2) + 2;  //右孩子
         if (left <= heapSize && a[left] > a[index]) {
