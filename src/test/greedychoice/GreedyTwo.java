@@ -79,12 +79,28 @@ public class GreedyTwo {
         }
         return false;
     }
-    /**
-     * @Description 给定一个非空整数数组，除了某个元素只出现一次以外，
-     * 其余每个元素均出现两次。找出那个只出现了一次的元素。
-     * @Param
-     * @return
-     * @Line 84
-     **/
 
+    /**
+     * @date 2019/3/2 12:16
+     * @return int
+     * @Description 330. 按要求补齐数组(review)
+     * @Param [nums, n] 
+     **/
+    public int minPatches(int[] nums, int n) {
+
+        long max = 1;
+        int cnt = 0;
+        for (int i = 0;max<=n;) {
+            if( i < nums.length && max >= nums[i]){
+                max += nums[i];
+                i++;
+
+            } else {
+                max += max;
+                cnt++;
+            }
+        }
+        return cnt;
+
+    }
 }
