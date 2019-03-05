@@ -5,6 +5,8 @@ import test.testhelp.TestHelper;
 import test.testhelp.safeTest;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Scanner;
 
 /**
  * @author wangfy
@@ -53,15 +55,15 @@ public class GreedyTwo {
     }
 
     /**
+     * @return boolean
      * @Description 给定一个整数数组，判断是否存在重复元素。
-     *
+     * <p>
      * 如果任何值在数组中出现至少两次，函数返回 true。如果数组中每个元素都不相同，则返回 false。
      * @Param [nums]
-     * @return boolean
      * @Line 59
      **/
     public boolean containsDuplicate(int[] nums) {
-        String s ="dawdaw";
+        String s = "dawdaw";
         s.indexOf("l");
         if (nums.length == 0) {
             return false;
@@ -81,17 +83,17 @@ public class GreedyTwo {
     }
 
     /**
-     * @date 2019/3/2 12:16
      * @return int
+     * @date 2019/3/2 12:16
      * @Description 330. 按要求补齐数组(review)
-     * @Param [nums, n] 
+     * @Param [nums, n]
      **/
     public int minPatches(int[] nums, int n) {
 
         long max = 1;
         int cnt = 0;
-        for (int i = 0;max<=n;) {
-            if( i < nums.length && max >= nums[i]){
+        for (int i = 0; max <= n; ) {
+            if (i < nums.length && max >= nums[i]) {
                 max += nums[i];
                 i++;
 
@@ -102,5 +104,73 @@ public class GreedyTwo {
         }
         return cnt;
 
+    }
+
+    public void find(int count, int total, Integer[] lock, Double[] percent) {
+        total -= 1;
+        Collections.sort(Arrays.asList(lock));
+        Arrays.stream(lock).forEachOrdered(a -> System.out.println(a));
+        int[][] dp = new int[lock.length][total];
+        dp[0][total] = lock[0];
+        for (int i = 1; i < lock.length; i++) {
+            if (dp[i][total] > dp[i - 1][total]) {
+
+            }
+        }
+
+    }
+
+
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        int n;
+        int k;
+        while (s.hasNextInt()) {
+            for (int i =0; i < 5; i++) {
+                System.out.println(s.nextInt());
+            }
+            System.out.println("ssss");
+        }
+//        while (s.hasNext()) {
+//            n = s.nextInt();
+//            k = s.nextInt();
+//            int max = 0;//被重新叫醒后可得的最高分。
+//            int sum = 0;//表示总的分数
+//            int[] a = new int[n];
+//            int[] t = new int[n];
+//            for (int i = 0; i < n; i++) {
+//                a[i] = s.nextInt();
+//            }
+//
+//            int now = 0;
+//            for (int i = 0; i < n; i++) {
+//                t[i] = s.nextInt();
+//                now += t[i] * a[i];
+//            }
+//
+//            int res = now;
+//            for (int i = 0; i < n; ) {
+//                if (t[i] == 0) {
+//                    now += 1 * a[i];
+//                }
+//                if (++i >= k) {
+//                    res = Math.max(res, now);
+//                    if (i - k < n && i - k >= 0) {
+//                        if (t[i - k] == 0) {
+//                            now -= 1 * a[i - k];
+//                        }
+//                    }
+//                }
+//
+//            }
+//            System.out.println(res);
+//
+//        }
+
+    }
+
+    public void sssss() {
+
+//        find(3, 10, new Integer[]{2, 5, 4}, new Double[]{0.5, 0.6, 0.1});
     }
 }

@@ -8,7 +8,6 @@ import test.testhelp.safeTest;
 import java.util.Arrays;
 
 
-
 public class dynamicTest {
     @Test
     public void test1() {
@@ -513,4 +512,6 @@ public class dynamicTest {
         }
         return res[grid.length-1][grid[0].length-1];
     }
+
+
 }

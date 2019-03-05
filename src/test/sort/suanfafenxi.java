@@ -26,7 +26,7 @@ public class suanfafenxi {
         } else {
             File[] files = oldFile.listFiles();
             for (int i = 0; i < files.length; i++) {
-                renameFile(path +File.separatorChar+ files[i].getName(), oldPrefix, newPrefix);
+                renameFile(path + File.separatorChar + files[i].getName(), oldPrefix, newPrefix);
             }
         }
     }
