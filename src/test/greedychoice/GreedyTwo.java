@@ -126,7 +126,7 @@ public class GreedyTwo {
         int n;
         int k;
         while (s.hasNextInt()) {
-            for (int i =0; i < 5; i++) {
+            for (int i = 0; i < 5; i++) {
                 System.out.println(s.nextInt());
             }
             System.out.println("ssss");
@@ -169,8 +169,50 @@ public class GreedyTwo {
 
     }
 
-    public void sssss() {
 
-//        find(3, 10, new Integer[]{2, 5, 4}, new Double[]{0.5, 0.6, 0.1});
+    /**
+     * @date 2019/3/7 11:32
+     * @return java.lang.String
+     * @Description 316. 去除重复字母
+     * @Param [s] 
+     **/
+    public String removeDuplicateLetters(String s) {
+        char[] ch = s.toCharArray();
+        boolean[] use = new boolean[26];
+        char[] result = new char[26];
+        int cur = 0;
+        for (int i = 0; i < ch.length; i++) {
+            char c = ch[i];
+            int index = c - 'a';
+            if (use[index]) {
+                continue;
+            }
+            for (int j = cur - 1; j >= 0; j--) {
+                char d = result[j];
+                if (d - c > 0 && s.substring(i).contains(d + "")) {
+                    cur = j;
+                    use[d - 'a'] = false;
+                    continue;
+                }
+                break;
+            }
+            result[cur++] = c;
+            use[index] = true;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c : result) {
+            if (c == '\u0000') {
+                continue;
+            }
+            sb.append(c);
+        }
+
+        return sb.toString();
+    }
+
+    @Test
+    public void sssss() {
+        System.out.println(removeDuplicateLetters("cbacdcbc"));
+
     }
 }
