@@ -143,8 +143,8 @@ public class DPTwo {
     }
 
     /**
-     * @date 2019/3/8 15:26
      * @return int
+     * @date 2019/3/8 15:26
      * @Description 313. 超级丑数(review)
      * @Param [n, primes]
      **/
@@ -172,9 +172,37 @@ public class DPTwo {
         return ugly[n - 1];
     }
 
+    /**
+     * @return int
+     * @date 2019/3/8 16:45
+     * @Description 312. 戳气球（review）
+     * 转移方程：找一个长一点的数组，找一靠中间的点，假设只有该点没戳破，
+     * 那么值就应该为 从 0 到 mid-1 点之间的最大值 + nums[mid] * nums[0-1] * nums[nums.length] + 从 mid+1 到 最后一点的最大值
+     * 0 与 nums.length 替换为begin 与 end
+     * @Param [nums]
+     **/
+    public int maxCoins(int[] nums) {
+        int[][] dp = new int[nums.length + 2][nums.length + 2];
+        int[] nnums = new int[nums.length + 2];
+        System.arraycopy(nums, 0, nnums, 1, nums.length);
+        nnums[0] = 1;
+        nnums[nnums.length - 1] = 1;
+
+        for (int len = 1; len <= nums.length; len++) {//分析第一次循环一定先求出戳破每一个的值，所以长度放上面
+            for (int begin = 1; begin <= nums.length - len + 1; begin++) {
+                int end = begin + len - 1;
+                for (int mid = begin; mid <= end; mid++) {//分析，起始的时候，begin== end
+                    dp[begin][end] = Math.max(dp[begin][end], dp[begin][mid - 1] + dp[mid + 1][end] + nnums[mid] * nnums[begin - 1] * nnums[end + 1]);
+                }
+            }
+        }
+        return dp[1][nnums.length - 2];
+
+    }
+
     @Test
     public void testOne() {
 
-        System.out.println(nthSuperUglyNumber(12, new int[]{2, 7, 13, 19}));
+        System.out.println(maxCoins(new int[]{3, 1, 5, 8}));
     }
 }
