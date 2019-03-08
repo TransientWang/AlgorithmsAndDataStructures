@@ -112,37 +112,69 @@ public class DPTwo {
 
 
     }
+
     /**
-     * @date 2019/3/8 14:55
      * @return int
+     * @date 2019/3/8 14:55
      * @Description 264. 丑数 II(review)
-     * @Param [n] 
+     * @Param [n]
      **/
     public int nthUglyNumber(int n) {
         int[] ugly = new int[n];
         ugly[0] = 1;
-        int i1=0;
+        int i1 = 0;
         int i2 = 0;
         int i3 = 0;
-        for(int i = 1;i < n; i++){
-            int min = Math.min(2 * ugly[i1],Math.min(3 * ugly[i2],5 * ugly[i3]));
+        for (int i = 1; i < n; i++) {
+            int min = Math.min(2 * ugly[i1], Math.min(3 * ugly[i2], 5 * ugly[i3]));
 
-            if(min == 2 * ugly[i1]){
+            if (min == 2 * ugly[i1]) {
                 i1++;
             }
-            if(min == 3 * ugly[i2]){
+            if (min == 3 * ugly[i2]) {
                 i2++;
             }
-            if(min == 5 * ugly[i3]){
+            if (min == 5 * ugly[i3]) {
                 i3++;
             }
             ugly[i] = min;
         }
-        return ugly[n-1];
+        return ugly[n - 1];
+    }
+
+    /**
+     * @date 2019/3/8 15:26
+     * @return int
+     * @Description 313. 超级丑数(review)
+     * @Param [n, primes]
+     **/
+    public int nthSuperUglyNumber(int n, int[] primes) {
+
+        int[] mins = new int[primes.length];
+        int[] ugly = new int[n];
+        ugly[0] = 1;
+        int[] hp = new int[primes.length];
+        for (int i = 1; i < n; i++) {
+            int min = Integer.MAX_VALUE;
+            for (int j = 0; j < primes.length; j++) {
+                mins[j] = primes[j] * ugly[hp[j]];
+                min = Math.min(min, mins[j]);
+            }
+
+            for (int k = 0; k < primes.length; k++) {
+                if (min == primes[k] * ugly[hp[k]]) {
+                    hp[k]++;
+                }
+            }
+            ugly[i] = min;
+        }
+
+        return ugly[n - 1];
     }
 
     @Test
     public void testOne() {
-        System.out.println(robTwo(new int[]{1, 2, 3, 1}));
+
+        System.out.println(nthSuperUglyNumber(12, new int[]{2, 7, 13, 19}));
     }
 }
