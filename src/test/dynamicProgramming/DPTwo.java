@@ -2,8 +2,6 @@ package test.dynamicProgramming;
 
 import org.junit.Test;
 
-import java.util.logging.Level;
-
 /**
  * @author wangfy
  * @Description 动态规划
@@ -113,6 +111,34 @@ public class DPTwo {
         return dp[nums.length - 1];
 
 
+    }
+    /**
+     * @date 2019/3/8 14:55
+     * @return int
+     * @Description 264. 丑数 II(review)
+     * @Param [n] 
+     **/
+    public int nthUglyNumber(int n) {
+        int[] ugly = new int[n];
+        ugly[0] = 1;
+        int i1=0;
+        int i2 = 0;
+        int i3 = 0;
+        for(int i = 1;i < n; i++){
+            int min = Math.min(2 * ugly[i1],Math.min(3 * ugly[i2],5 * ugly[i3]));
+
+            if(min == 2 * ugly[i1]){
+                i1++;
+            }
+            if(min == 3 * ugly[i2]){
+                i2++;
+            }
+            if(min == 5 * ugly[i3]){
+                i3++;
+            }
+            ugly[i] = min;
+        }
+        return ugly[n-1];
     }
 
     @Test
