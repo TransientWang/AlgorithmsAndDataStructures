@@ -2,11 +2,6 @@ package test.datastructures;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Scanner;
-
 public class Main {
     public class ListNode {
         int val;
@@ -33,12 +28,13 @@ public class Main {
 
 
     }
+
     /**
+     * @return test.datastructures.Main.ListNode
      * @Description 给定两个非空链表来表示两个非负整数。位数按照逆序方式存储，
      * 它们的每个节点只存储单个数字。将两数相加返回一个新的链表。
      * 你可以假设除了数字 0 之外，这两个数字都不会以零开头。
      * @Param [l1, l2]
-     * @return test.datastructures.Main.ListNode
      * @Line 40
      **/
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -67,10 +63,10 @@ public class Main {
                 node.val = Math.abs(10 - sum);
             }
 
-            if (l1!=null || l2 !=null) {
+            if (l1 != null || l2 != null) {
                 node.next = new ListNode(0);
                 node = node.next;
-            }else if (c ==1){
+            } else if (c == 1) {
                 node.next = new ListNode(1);
                 node = node.next;
             }
@@ -81,5 +77,37 @@ public class Main {
         return head;
     }
 
+    /**
+     * @date 2019/3/12 16:33
+     * @return java.lang.String
+     * @Description 299. 猜数字游戏（review）
+     * @Param [secret, guess] 
+     **/
+    public String getHint(String secret, String guess) {
+        int[] sFreq = new int[10];
+        int[] gFreq = new int[10];
+        int bulls = 0, cows = 0;
+        for (int i = 0; i < secret.length(); i++) {
+            char s = secret.charAt(i);
+            char g = guess.charAt(i);
+            if (s == g) {
+                bulls++;
+            } else {
+                sFreq[s - '0']++;
+                gFreq[g - '0']++;
+            }
+        }
+        for (int i = 0; i < 10; i++) {
+            cows += Math.min(sFreq[i], gFreq[i]);
+        }
+        return bulls + "A" + cows + "B";
+    }
 
+
+    @Test
+    public void tests() {
+        String secret = "1123";
+        String guess = "0111";
+        System.out.println(getHint(secret, guess));
+    }
 }

@@ -66,6 +66,6 @@ public class shouchuan {
 
             }
         }
-        System.out.println("res:"+count);
+        System.out.println(count);
     }
 }
