@@ -2,8 +2,10 @@ package test.greedychoice;
 
 import org.junit.Test;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.TreeSet;
 
 /**
  * @author wangfy
@@ -18,9 +20,34 @@ public class ActivitySelection {
         int[] s = new int[]{1, 3, 0, 5, 3, 5, 6, 8, 8, 2, 12};
         int[] f = new int[]{4, 5, 6, 7, 9, 9, 10, 11, 12, 14, 16};
 //        recursiceSelector(s, f, 0, 11);
-        GreedyActivitySelector(s, f);
+//        GreedyActivitySelector(s, f);
+        TreeSet<Integer> list = new TreeSet<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        System.out.println(list.higher(3));
     }
 
+    /**
+     * @return int
+     * @date 2019/3/12 15:25
+     * @Description 300. 最长上升子序列(review)
+     * @Param [nums]
+     **/
+    public int lengthOfLIS(int[] nums) {
+        TreeSet<Integer> list = new TreeSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            int num = nums[i];
+            if (list.size() == 0 || num > list.last()) {
+                list.add(num);
+            } else {
+                list.remove(list.ceiling(num));
+                list.add(num);
+            }
+        }
+        return list.size();
+
+    }
 
     /**
      * @return void
@@ -145,8 +172,6 @@ public class ActivitySelection {
     }
 
 
-
-
     //哈弗曼树测试
     @Test
     public void hhtest() {
@@ -181,8 +206,8 @@ public class ActivitySelection {
     }
 
     /**
-     * @Description 展示哈夫曼树
      * @return void
+     * @Description 展示哈夫曼树
      * @Param [tree, flag]
      * @Line 194
      **/
