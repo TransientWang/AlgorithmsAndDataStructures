@@ -73,7 +73,32 @@ public class ArrayOne {
         }
         return res;
     }
-
+    /**
+     * @date 2019/3/13 15:53
+     * @return int
+     * @Description 287. 寻找重复数(review)
+     * @Param [nums] 
+     **/
+    public int findDuplicate(int[] nums) {
+        int slow = 0;
+        int fast = 0;
+        int t = 0;
+        while(true){
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+            if(slow == fast){
+                break;
+            }
+        }
+        while(true){
+            t = nums[t];
+            slow = nums[slow];
+            if(slow == t){
+                break;
+            }
+        }
+        return slow;
+    }
     @Test
     public void test() {
         int[][] tmp = {{2, 9, 10}, {3, 7, 15}, {5, 12, 12}, {15, 20, 10}, {19, 24, 8}};
