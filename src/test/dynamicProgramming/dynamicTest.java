@@ -2,7 +2,6 @@ package test.dynamicProgramming;
 
 
 import org.junit.Test;
-import test.testhelp.TestHelper;
 import test.testhelp.safeTest;
 
 import java.util.Arrays;
@@ -79,8 +78,8 @@ public class dynamicTest {
     public void test2() {
         int[] v = {8, 10, 6, 3, 7, 2};
         int[] w = {4, 6, 2, 2, 5, 1};
-//        System.out.println(bagSolution(w, v, 12));
-        TestHelper.test(getClass(),"bagSolution",w, v, 12);
+        System.out.println(bagSolution(w, v, 12));
+//        TestHelper.test(getClass(),"bagSolution",w, v, 12);
     }
 
     /**
@@ -96,27 +95,28 @@ public class dynamicTest {
         if (w.length > 0 && w[0] > j) {
             return 0;
         }
-        int[][] m = new int[w.length][j];
-        j -= 1;
-        m[0][j] = v[0];
-        int q = 0;
-        for (int i = 1; i < w.length; i++) {
-            if (m[i - 1][j] > m[i - 1][j - w[i]] + v[i]) {
-                m[i][j] = m[i - 1][j];
-            } else {
-                m[i][j - w[i]] = m[i - 1][j - w[i]] + v[i];
-                if (m[i][j - w[i]] > q) {
-                    q = m[i][j - w[i]];
+        int[][] dp = new int[w.length + 1][j + 1];
+        int res = 0;
+        for (int i = 1; i < w.length + 1; i++) {
+            for (int k = w[i - 1]; k < j + 1; k++) {
+                if (w[i - 1] <= k) {
+                    dp[i][k] = Math.max(dp[i - 1][k], dp[i - 1][k - w[i - 1]] + v[i - 1]);
+                    res = Math.max(res, dp[i][j]);
+                } else {
+                    dp[i][k] = dp[i - 1][k];
                 }
+
             }
         }
-        for (int i = 0; i < 6; i++) {
+
+
+        for (int i = 0; i < w.length + 1; i++) {
             for (int k = 0; k < j + 1; k++) {
-                System.out.print(m[i][k] + " ");
+                System.out.print(dp[i][k] + " ");
             }
             System.out.println();
         }
-        return q;
+        return res;
     }
 
     @Test
@@ -482,15 +482,15 @@ public class dynamicTest {
     }
 
     /**
+     * @return int
      * @Description 给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
-     *
+     * <p>
      * 说明：每次只能向下或者向右移动一步。
      * 一、分析最优解的结构特征
-     *     假设极端情况  当只有一行一列时  最优解就是grid[0][0]
-     *     有一行或者一列时 最优解 就是 这一行或者一列的和
-     *     在多行多列的情况时从自顶点向下来看 到每个点的最小距离为能到达它的两个前顶点中最小的一个解
+     * 假设极端情况  当只有一行一列时  最优解就是grid[0][0]
+     * 有一行或者一列时 最优解 就是 这一行或者一列的和
+     * 在多行多列的情况时从自顶点向下来看 到每个点的最小距离为能到达它的两个前顶点中最小的一个解
      * @Param [grid]
-     * @return int
      * @Line 489
      **/
     public int minPathSum(int[][] grid) {
@@ -507,10 +507,10 @@ public class dynamicTest {
 
         for (int i = 1; i < grid.length; i++) {
             for (int j = 1; j < grid[0].length; j++) {
-                res[i][j] = res[i - 1][j] < res[i][j - 1]?res[i - 1][j] + grid[i][j]:res[i][j - 1] + grid[i][j];
+                res[i][j] = res[i - 1][j] < res[i][j - 1] ? res[i - 1][j] + grid[i][j] : res[i][j - 1] + grid[i][j];
             }
         }
-        return res[grid.length-1][grid[0].length-1];
+        return res[grid.length - 1][grid[0].length - 1];
     }
 
 
