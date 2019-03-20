@@ -38,5 +38,32 @@ public class DSone {
         return res;
     }
 
+    /**
+     * @date 2019/3/20 9:37
+     * @return test.datastructures.TreeNode
+     * @Description 236. 二叉树的最近公共祖先
+     * @Param [root, p, q]
+     **/
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(p == root || q == root){
+            return p == root ? p : q;
+        }
+        TreeNode left = null;
+        TreeNode right = null;
+        if(root.left != null){
+            left = lowestCommonAncestor(root.left,p,q);
+        }
+        if(root.right != null){
+            right = lowestCommonAncestor(root.right,p,q);
+        }
+
+
+
+        if(left != null && right != null){
+            return root;
+        }
+        return left == null ? right:left;
+
+    }
 
 }
