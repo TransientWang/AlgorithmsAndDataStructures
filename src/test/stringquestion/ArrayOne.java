@@ -12,8 +12,8 @@ import java.util.*;
  **/
 public class ArrayOne {
     /**
+     * @return java.util.List<int ]>
      * @date 2018/12/8 11:01
-     * @return java.util.List<int[]>
      * @Description 将每条建筑的横线段分解成左上右上两个顶点，将所有这些点按横坐标大小升序排列
      * 从左至右遍历这些点，每遍历到一个左顶点，将此点代表的建筑高度放入大顶堆height中
      * 每次到一个左顶点，先比较此顶点高度与当前基准高度，如果高于基准高度，那么就是一个轮廓点。这是最关键的地方，结合图形理解，如果当前建筑的左顶点要作比较，肯定是与它前面有重叠的建筑比较，而前面重叠的建筑高度，要取之前最高的、横线还在延续的建筑比较，因此需要用到一个大顶堆维护当前高度
@@ -51,7 +51,7 @@ public class ArrayOne {
             int[] B = {buildings[i][1], -buildings[i][2]};
             set.add(B);
         }
-        set.forEach(o -> System.out.println(o[0]+" "+o[1]));
+        set.forEach(o -> System.out.println(o[0] + " " + o[1]));
         System.out.println();
         heap.offer(0);
         int preHeight = 0;
@@ -73,37 +73,76 @@ public class ArrayOne {
         }
         return res;
     }
+
     /**
-     * @date 2019/3/13 15:53
      * @return int
+     * @date 2019/3/13 15:53
      * @Description 287. 寻找重复数(review)
-     * @Param [nums] 
+     * @Param [nums]
      **/
     public int findDuplicate(int[] nums) {
         int slow = 0;
         int fast = 0;
         int t = 0;
-        while(true){
+        while (true) {
             slow = nums[slow];
             fast = nums[nums[fast]];
-            if(slow == fast){
+            if (slow == fast) {
                 break;
             }
         }
-        while(true){
+        while (true) {
             t = nums[t];
             slow = nums[slow];
-            if(slow == t){
+            if (slow == t) {
                 break;
             }
         }
         return slow;
     }
+
+    /**
+     * @date 2019/3/21 16:57
+     * @return int
+     * @Description 227. 基本计算器 II(reveiw)
+     * @Param [s] 
+     **/
+    public int calculate(String s) {
+        char[] chars = s.toCharArray();
+        Deque<Integer> stack = new ArrayDeque<>();
+        int tmp = 0;
+        char op = '+';
+        for (int i = 0; i < s.length(); i++) {
+            if (chars[i] >= '0' && chars[i] <= '9') {
+                tmp = tmp * 10 + (chars[i] - '0');
+            }
+            if (chars[i] != ' ' && (chars[i] < '0' || chars[i] > '9') || i == chars.length - 1) {
+                switch (op) {
+                    case '+':
+                        stack.addFirst(tmp);
+                        break;
+                    case '-':
+                        stack.addFirst(-tmp);
+                        break;
+                    default:
+                        int t = stack.pollFirst();
+                        tmp = op == '*' ? t * tmp : t / tmp;
+                        stack.addFirst(tmp);
+                }
+                tmp = 0;
+                op = chars[i];
+            }
+        }
+
+        return stack.size() ==1? stack.pollFirst() : stack.stream().reduce((a, b) -> a + b).get();
+    }
+
     @Test
     public void test() {
+        System.out.println(calculate("100000000/1/2/3/4/5/6/7/8/9/10"));
         int[][] tmp = {{2, 9, 10}, {3, 7, 15}, {5, 12, 12}, {15, 20, 10}, {19, 24, 8}};
 //        int[][] tmp = {{0, 2, 3}, {2, 5, 3}};
-        var res = getSkyline(tmp);
+//        var res = getSkyline(tmp);
 //        res.forEach(o -> System.out.println(o[0] + " " + o[1]));
 
 
