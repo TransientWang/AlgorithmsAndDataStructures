@@ -68,8 +68,8 @@ public class DSone {
     }
 
     /**
-     * @date 2019/3/20 12:04
      * @return int
+     * @date 2019/3/20 12:04
      * @Description 375. 猜数字大小 II
      * @Param [n]
      **/
@@ -80,12 +80,37 @@ public class DSone {
             for (int hi = lo + 1; hi <= n; hi++) {
                 dp[lo][hi] = Integer.MAX_VALUE;
                 for (int idx = lo; idx < hi; idx++) {
-                    System.out.format("%d,%d\n",lo,hi);
+                    System.out.format("%d,%d\n", lo, hi);
                     dp[lo][hi] = Math.min(dp[lo][hi], idx + Math.max(dp[lo][idx - 1], dp[idx + 1][hi]));
                 }
             }
         }
         return dp[1][n];
+    }
+
+    /**
+     * @date 2019/3/21 14:18
+     * @return int
+     * @Description 230. 二叉搜索树中第K小的元素(review)
+     * @Param [root, k] 
+     **/
+    public int kthSmallest(TreeNode root, int k) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        List<Integer> list = new ArrayList<>();
+        while (stack.size() != 0 || root != null) {
+            if (root != null) {
+                stack.addFirst(root);
+                root = root.left;
+            } else {
+                var p = stack.pollFirst();
+                list.add(p.val);
+                if (list.size() == k) {
+                    return list.get(k - 1);
+                }
+                root = root.right;
+            }
+        }
+        return -1;
     }
 
     @Test
