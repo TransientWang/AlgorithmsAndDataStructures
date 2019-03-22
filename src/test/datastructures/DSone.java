@@ -118,4 +118,22 @@ public class DSone {
         getMoneyAmount(10);
     }
 
+    /**
+     * @date 2019/3/22 10:45
+     * @return test.datastructures.TreeNode
+     * @Description 226. 翻转二叉树
+     * @Param [root]
+     **/
+    public TreeNode invertTree(TreeNode root) {
+        if(root == null){
+            return root;
+        }
+        TreeNode tleft = invertTree(root.left);
+        TreeNode tright = invertTree(root.right);
+        root.left = tright;
+        root.right = tleft;
+        return root;
+    }
+
+
 }
