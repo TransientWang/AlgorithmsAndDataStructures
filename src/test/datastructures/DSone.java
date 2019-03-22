@@ -121,7 +121,7 @@ public class DSone {
     /**
      * @date 2019/3/22 10:45
      * @return test.datastructures.TreeNode
-     * @Description 226. 翻转二叉树
+     * @Description 226. 翻转二叉树（review）
      * @Param [root]
      **/
     public TreeNode invertTree(TreeNode root) {
@@ -134,6 +134,5 @@ public class DSone {
         root.right = tleft;
         return root;
     }
-
 
 }
