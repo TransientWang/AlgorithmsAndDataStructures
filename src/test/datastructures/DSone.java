@@ -89,10 +89,10 @@ public class DSone {
     }
 
     /**
-     * @date 2019/3/21 14:18
      * @return int
+     * @date 2019/3/21 14:18
      * @Description 230. 二叉搜索树中第K小的元素(review)
-     * @Param [root, k] 
+     * @Param [root, k]
      **/
     public int kthSmallest(TreeNode root, int k) {
         Deque<TreeNode> stack = new ArrayDeque<>();
@@ -113,19 +113,15 @@ public class DSone {
         return -1;
     }
 
-    @Test
-    public void test() {
-        getMoneyAmount(10);
-    }
 
     /**
-     * @date 2019/3/22 10:45
      * @return test.datastructures.TreeNode
+     * @date 2019/3/22 10:45
      * @Description 226. 翻转二叉树（review）
      * @Param [root]
      **/
     public TreeNode invertTree(TreeNode root) {
-        if(root == null){
+        if (root == null) {
             return root;
         }
         TreeNode tleft = invertTree(root.left);
@@ -134,5 +130,51 @@ public class DSone {
         root.right = tleft;
         return root;
     }
+
+    /**
+     * @date 2019/3/23 23:00
+     * @return int
+     * @Description 224. 基本计算器(review)
+     * @Param [s]
+     **/
+    public int calculate(String s) {
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+        int result = 0;
+        int operate = 1;
+        int num = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '+') {
+                result += operate * num;
+                num = 0;
+                operate = 1;
+            } else if (s.charAt(i) == '-') {
+                result += operate * num;
+                num = 0;
+                operate = -1;
+            } else if (s.charAt(i) == '(') {
+                stack.offerLast(result);
+                stack.offerLast(operate);
+                num = 0;
+                result = 0;
+                operate = 1;
+            } else if (s.charAt(i) == ')') {
+                result += operate * num;
+                num = 0;
+                result *= stack.pollLast();
+                result += stack.pollLast();
+            } else if (s.charAt(i) != ' ') {
+                num = num * 10 + Integer.valueOf(s.substring(i, i + 1));
+            }
+        }
+        result += operate * num;
+        return result;
+    }
+
+    @Test
+    public void test() {
+        System.out.println(calculate("(1+(4+5+2)-3)+(6+8)"));
+
+    }
+
 
 }
