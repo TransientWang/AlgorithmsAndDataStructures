@@ -1,12 +1,9 @@
 package test.datastructures;
 
-import com.sun.source.tree.IfTree;
 import org.junit.Test;
-
 
 import java.util.Queue;
 import java.util.Stack;
-
 import java.util.concurrent.ArrayBlockingQueue;
 
 
@@ -96,7 +93,7 @@ public class dataTest {
     /**
      * @return void
      * @Description 二叉树深度遍历
-     *用栈实现，先把根节点入栈，然后循环（出栈一次，右节点先入栈，左边节点后入栈
+     * 用栈实现，先把根节点入栈，然后循环（出栈一次，右节点先入栈，左边节点后入栈
      * 用栈实现
      * @Param [root]
      * @Line 100
@@ -114,7 +111,32 @@ public class dataTest {
         }
     }
 
-  private   class treeNode<T extends Number> {
+    /**
+     * @date 2019/3/24 14:08
+     * @return int
+     * @Description 222. 完全二叉树的节点个数(review)
+     * @Param [root] 
+     **/
+    public int countNodes(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int deep = 0;
+        TreeNode left = root, right = root;
+        while (right != null) {
+            right = right.right;
+            left = left.left;
+            deep++;
+        }
+        if (left == null) {
+            return (1 << deep) - 1;
+        }
+        return 1 + countNodes(root.left) + countNodes(root.right);
+
+    }
+
+
+    private class treeNode<T extends Number> {
         int type;
 
         public treeNode(int type) {
