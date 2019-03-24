@@ -25,4 +25,23 @@ public class DPThree {
         return dp[target];
 
     }
+
+    /**
+     * @date 2019/3/24 14:46
+     * @return int
+     * @Description 413. 等差数列划分
+     * @Param [A]
+     **/
+    public int numberOfArithmeticSlices(int[] A) {
+        int r = 0,res = 0;
+        for(int i = 2; i < A.length ;i++){
+            if(A[i] - A[i-1] == A[i-1] - A[i-2]){
+                r++;
+                res += r;
+            }else{
+                r = 0;
+            }
+        }
+        return res;
+    }
 }
