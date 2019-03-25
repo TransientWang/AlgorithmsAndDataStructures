@@ -1,8 +1,6 @@
 package test.stringquestion;
 
-
 import org.junit.Test;
-
 import java.util.*;
 
 /**
@@ -12,7 +10,7 @@ import java.util.*;
  **/
 public class ArrayOne {
     /**
-     * @return java.util.List<int ]>
+     * @return java.util.List<int]>
      * @date 2018/12/8 11:01
      * @Description 将每条建筑的横线段分解成左上右上两个顶点，将所有这些点按横坐标大小升序排列
      * 从左至右遍历这些点，每遍历到一个左顶点，将此点代表的建筑高度放入大顶堆height中
@@ -102,10 +100,10 @@ public class ArrayOne {
     }
 
     /**
-     * @date 2019/3/21 16:57
      * @return int
+     * @date 2019/3/21 16:57
      * @Description 227. 基本计算器 II(reveiw)
-     * @Param [s] 
+     * @Param [s]
      **/
     public int calculate(String s) {
         char[] chars = s.toCharArray();
@@ -134,7 +132,7 @@ public class ArrayOne {
             }
         }
 
-        return stack.size() ==1? stack.pollFirst() : stack.stream().reduce((a, b) -> a + b).get();
+        return stack.size() == 1 ? stack.pollFirst() : stack.stream().reduce((a, b) -> a + b).get();
     }
 
     @Test
@@ -146,5 +144,30 @@ public class ArrayOne {
 //        res.forEach(o -> System.out.println(o[0] + " " + o[1]));
 
 
+    }
+
+    /**
+     * @date 2019/3/25 17:33
+     * @return boolean
+     * @Description 220. 存在重复元素 III(review)
+     * @Param [nums, k, t]
+     **/
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        if (k < 1 || t < 0) return false;
+        Map<Long, Long> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            long remappedNum = (long) nums[i] - Integer.MIN_VALUE;
+            long bucket = remappedNum / ((long) t + 1);
+            if (map.containsKey(bucket)
+                    || (map.containsKey(bucket - 1) && remappedNum - map.get(bucket - 1) <= t)
+                    || (map.containsKey(bucket + 1) && map.get(bucket + 1) - remappedNum <= t))
+                return true;
+            if (i >= k) {
+                long lastBucket = ((long) nums[i - k] - Integer.MIN_VALUE) / ((long) t + 1);
+                map.remove(lastBucket);
+            }
+            map.put(bucket, remappedNum);
+        }
+        return false;
     }
 }
