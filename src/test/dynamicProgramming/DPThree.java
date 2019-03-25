@@ -2,8 +2,6 @@ package test.dynamicProgramming;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
 /**
  * @author wangfy
  * @Description TODO
@@ -50,8 +48,8 @@ public class DPThree {
     }
 
     /**
-     * @date 2019/3/25 16:16
      * @return int
+     * @date 2019/3/25 16:16
      * @Description 221. 最大正方形(review)
      * @Param [matrix]
      **/
@@ -59,13 +57,25 @@ public class DPThree {
         if (matrix.length == 0) {
             return 0;
         }
-        int[][] dp = new int[matrix.length + 1][matrix[0].length + 1];
         int res = 0;
-        for (int x = 1; x < matrix.length + 1; x++) {
-            for (int y = 1; y < matrix[0].length + 1; y++) {
-                if (matrix[x - 1][y - 1] == '1') {
-                    dp[x][y] = Arrays.stream(new int[]{dp[x - 1][y], dp[x][y - 1], dp[x - 1][y - 1]}).min().getAsInt() + 1;
-                    res = Math.max(dp[x][y], res);
+//        int[][] dp = new int[matrix.length + 1][matrix[0].length + 1];
+//        for (int x = 1; x < matrix.length + 1; x++) {
+//            for (int y = 1; y < matrix[0].length + 1; y++) {
+//                if (matrix[x - 1][y - 1] == '1') {
+//                    dp[x][y] = Arrays.stream(new int[]{dp[x - 1][y], dp[x][y - 1], dp[x - 1][y - 1]}).min().getAsInt() + 1;
+//                    res = Math.max(dp[x][y], res);
+//                }
+//            }
+//        }
+        int[] dp = new int[matrix[0].length];
+        for (int x = 0; x < matrix.length; x++) {
+            int len = 0;
+            for (int y = 0; y < matrix[0].length; y++) {
+                dp[y] = matrix[x][y] == '1' ? dp[y] + 1 : 0;
+                len = dp[y] > res ? len + 1 : 0;
+                if (len == res + 1) {
+                    res++;
+                    len = 0;
                 }
             }
         }
