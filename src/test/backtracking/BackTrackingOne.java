@@ -26,14 +26,14 @@ public class BackTrackingOne {
     private void backTrack(List<List<Integer>> res, int k, int n, List<Integer> list, Integer sum, Integer begin, Integer end) {
         if (list.size() == k && sum == n) {
             res.add(list);
+            return;
         }
-        if (list.size() < k) {
-            for (int i = begin; i < end; i++) {
-                List<Integer> nList = new ArrayList<>(list);
-                nList.add(i);
-                backTrack(res, k, n,nList , sum + i, i + 1, end);
-            }
+        for (int i = begin; i < end; i++) {
+            List<Integer> nList = new ArrayList<>(list);
+            nList.add(i);
+            backTrack(res, k, n,nList , sum + i, i + 1, end);
         }
+
     }
 
     @Test
