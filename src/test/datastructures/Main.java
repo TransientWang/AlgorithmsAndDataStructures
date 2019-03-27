@@ -3,7 +3,7 @@ package test.datastructures;
 import org.junit.Test;
 
 public class Main {
-    public class ListNode {
+    public static class ListNode {
         int val;
         ListNode next;
 
