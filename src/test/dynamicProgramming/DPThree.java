@@ -2,6 +2,8 @@ package test.dynamicProgramming;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 /**
  * @author wangfy
  * @Description TODO
@@ -80,6 +82,23 @@ public class DPThree {
             }
         }
         return res * res;
+    }
+
+    /**
+     * @return int
+     * @date 2019/3/27 8:42
+     * @Description 322. 零钱兑换(reveiw)
+     * @Param [coins, amount]
+     **/
+    public int coinChange(int[] coins, int amount) {
+        int[] money = new int[amount + 1];
+        Arrays.fill(money, 1, amount, amount + 1);
+        for (int coin : coins) {
+            for (int i = coin; i < amount + 1; i++) {
+                money[i] = Math.min(money[i - coin] + 1, money[i]);
+            }
+        }
+        return money[amount] == amount + 1 ? -1 : money[amount];
     }
 
     @Test
