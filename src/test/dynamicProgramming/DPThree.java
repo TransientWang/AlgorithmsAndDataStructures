@@ -92,7 +92,7 @@ public class DPThree {
      **/
     public int coinChange(int[] coins, int amount) {
         int[] money = new int[amount + 1];
-        Arrays.fill(money, 1, amount, amount + 1);
+        Arrays.fill(money, 1, amount + 1, amount + 1);
         for (int coin : coins) {
             for (int i = coin; i < amount + 1; i++) {
                 money[i] = Math.min(money[i - coin] + 1, money[i]);
