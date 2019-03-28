@@ -9,12 +9,14 @@ import java.util.LinkedList;
  * @date 2019/1/4
  **/
 class LRUCache {
-    private HashMap<Integer, Integer> hashMap = new HashMap<>();
-    private LinkedList<Integer> list = new LinkedList<>();
+    private HashMap<Integer, Integer> hashMap;
+    private LinkedList<Integer> list;
     private int capacity;
 
     public LRUCache(int capacity) {
         this.capacity = capacity;
+        this.hashMap = new HashMap<>();
+        this.list = new LinkedList<>();
     }
 
     public int get(int key) {
@@ -30,16 +32,14 @@ class LRUCache {
         if (hashMap.containsKey(key)) {
             list.remove((Object) key);
             list.addFirst(key);
-            hashMap.put(key, value);
         } else if (capacity == 0) {
             hashMap.remove(list.pollLast());
-            hashMap.put(key, value);
             list.addFirst(key);
         } else {
             list.addFirst(key);
-            hashMap.put(key, value);
             capacity--;
         }
+        hashMap.put(key, value);
     }
 }
 
