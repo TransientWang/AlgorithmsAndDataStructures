@@ -4,10 +4,6 @@ import org.junit.Test;
 import test.testhelp.TestHelper;
 import test.testhelp.safeTest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author wangfy
  * @Description 字符串
@@ -21,11 +17,12 @@ public class StringQuestionOne {
         int[] ints = {1, 2, 3, 4, 5, 6, 7};
         TestHelper.test(getClass(), "rotate2", ints, 3);
     }
+
     /**
+     * @return void
      * @Description 可以采取反转的方法，先反转前n-k个元素，再反转后k个元素，
      * 然后再将整个数组反转，就能得到该数组旋转k个元素的结果了
      * @Param [nums, k]
-     * @return void
      * @Line 27
      **/
     @safeTest(300)
@@ -70,4 +67,22 @@ public class StringQuestionOne {
         }
     }
 
+    public String shortestPalindrome(String s) {
+        int i = 0;
+        for (int j = s.length() - 1; j >= 0; j--) {
+            if (s.charAt(i) == s.charAt(j)) i++;
+        }
+        if (i == s.length()) return s;
+        String tmp = reverseSt(s.substring(i));
+        return tmp + shortestPalindrome(s.substring(0, i)) + s.substring(i);
+    }
+
+    public String reverseSt(String target) {
+        char[] tmp = target.toCharArray();
+        char[] result = new char[tmp.length];
+        for (int i = 0; i < tmp.length; i++) {
+            result[i] = tmp[tmp.length - i - 1];
+        }
+        return String.valueOf(result);
+    }
 }

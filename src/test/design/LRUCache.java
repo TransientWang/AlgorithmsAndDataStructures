@@ -1,37 +1,45 @@
 package test.design;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * @author wangfy
- * @Description 146.LRU缓存机制
+ * @Description 146.LRU缓存机制(review)
  * @date 2019/1/4
  **/
-public class LRUCache extends LinkedHashMap<Integer, Integer> {
-    private int LRUCapacity;
+class LRUCache {
+    private HashMap<Integer, Integer> hashMap = new HashMap<>();
+    private LinkedList<Integer> list = new LinkedList<>();
+    private int capacity;
 
-
-    LRUCache(int LRUCapacity) {
-        super(16, 0.75f, true);
-        this.LRUCapacity = LRUCapacity;
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
     }
 
-    @Override
-    public Integer get(Object key) {
-        return super.getOrDefault(key, -1);
+    public int get(int key) {
+        Integer res = hashMap.getOrDefault(key, -1);
+        if (res != -1) {
+            list.remove((Object) key);
+            list.addFirst(key);
+        }
+        return res;
     }
 
-    @Override
-    protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
-        if (size() > this.LRUCapacity) return true;
-        else return false;
+    public void put(int key, int value) {
+        if (hashMap.containsKey(key)) {
+            list.remove((Object) key);
+            list.addFirst(key);
+            hashMap.put(key, value);
+        } else if (capacity == 0) {
+            hashMap.remove(list.pollLast());
+            hashMap.put(key, value);
+            list.addFirst(key);
+        } else {
+            list.addFirst(key);
+            hashMap.put(key, value);
+            capacity--;
+        }
     }
-
-    public static void main(String[] args) {
-        LRUCache lruCache = new LRUCache(2);
-        lruCache.put(1, 1);
-        lruCache.put(2, 2);
-    }
-
 }
+
