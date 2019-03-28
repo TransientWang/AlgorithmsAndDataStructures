@@ -49,35 +49,26 @@ public class GreedyTwo {
 
     @Test
     public void testOne() {
-        int[] prices = {7, 1, 5, 3, 6, 4};
-        TestHelper.test(getClass(), "maxProfit", prices);
+        int[] prices = {7, 1, 5, 3, 6, 1};
+        TestHelper.test(getClass(), "containsDuplicate", prices);
 
     }
 
     /**
      * @return boolean
-     * @Description 给定一个整数数组，判断是否存在重复元素。
-     * <p>
-     * 如果任何值在数组中出现至少两次，函数返回 true。如果数组中每个元素都不相同，则返回 false。
+     * @Description 217. 存在重复元素(review)
      * @Param [nums]
      * @Line 59
      **/
     public boolean containsDuplicate(int[] nums) {
-        String s = "dawdaw";
-        s.indexOf("l");
-        if (nums.length == 0) {
+        if (nums.length <= 1) {
             return false;
         }
-        if (nums.length == 1) {
-            return false;
-        }
-        nums = Arrays.stream(nums).sorted().toArray();
+        Arrays.sort(nums);
         int tmp = nums[0];
         for (int i = 1; i < nums.length; i++) {
-            int num = nums[i];
-            if (tmp == num) return true;
-            tmp = num;
-
+            if ((tmp ^ nums[i]) == 0) return true;
+            tmp = nums[i];
         }
         return false;
     }
@@ -171,10 +162,10 @@ public class GreedyTwo {
 
 
     /**
-     * @date 2019/3/7 11:32
      * @return java.lang.String
+     * @date 2019/3/7 11:32
      * @Description 316. 去除重复字母
-     * @Param [s] 
+     * @Param [s]
      **/
     public String removeDuplicateLetters(String s) {
         char[] ch = s.toCharArray();
