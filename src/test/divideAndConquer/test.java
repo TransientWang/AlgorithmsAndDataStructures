@@ -60,7 +60,6 @@ public class test {
         a[left] = a[j];
         a[j] = cur;
 
-
     }
 
     @Test
@@ -69,7 +68,6 @@ public class test {
         int[] n2 = {2};
 
     }
-
 
 
     @Test
@@ -158,6 +156,41 @@ public class test {
             }
             return maxprofit;
         }
+    }
+
+    /**
+     * @return int
+     * @date 2019/3/28 11:15
+     * @Description 215. 数组中的第K个最大元素(review)
+     * 快排+二分
+     * @Param [nums, k]
+     **/
+    public int findKthLargest(int[] nums, int k) {
+
+        return search(0, nums.length - 1, k, nums);
+    }
+
+    public int search(int left, int right, int k, int[] nums) {
+        int m = find(left, right, nums);
+        if (m - left + 1 == k) return nums[m];
+        else if (k < m - left + 1) return search(left, m - 1, k, nums);
+        return search(m + 1, right, k - (m - left + 1), nums);
+    }
+
+    public int find(int left, int right, int[] nums) {
+        int l = left, r = right, tmp = nums[left];
+        while (l < r) {
+            while (l < r && nums[r] < tmp) r--;
+            while (l < r && nums[l] >= tmp) l++;
+            if (l < r) {
+                int t = nums[l];
+                nums[l] = nums[r];
+                nums[r] = t;
+            }
+        }
+        nums[left] = nums[l];
+        nums[l] = tmp;
+        return l;
     }
 
 
