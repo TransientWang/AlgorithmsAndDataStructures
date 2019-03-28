@@ -166,7 +166,14 @@ public class test {
      * @Param [nums, k]
      **/
     public int findKthLargest(int[] nums, int k) {
-
+//        Queue<Integer> heap = new PriorityQueue<>();
+//        for (int num : nums) {
+//            heap.offer(num);
+//            if (heap.size() > k) {
+//                heap.poll();
+//            }
+//        }
+//        return heap.poll();
         return search(0, nums.length - 1, k, nums);
     }
 
