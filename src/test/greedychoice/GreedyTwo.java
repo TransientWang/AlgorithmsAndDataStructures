@@ -201,9 +201,30 @@ public class GreedyTwo {
         return sb.toString();
     }
 
+    /**
+     * @date 2019/3/29 10:05
+     * @return int
+     * @Description 135. 分发糖果(review)
+     * @Param [ratings]
+     **/
+    public int candy(int[] ratings) {
+        int[] dp = new int[ratings.length];
+        Arrays.fill(dp,1);
+        for (int i = 1; i < dp.length; i++) {
+            if (ratings[i] > ratings[i - 1] && dp[i] <= dp[i - 1])
+                dp[i] = dp[i - 1] + 1;
+        }
+
+        for (int j = dp.length - 2; j >= 0; j--) {
+            if (ratings[j] > ratings[j + 1] && dp[j] <= dp[j + 1])
+                dp[j] = dp[j + 1] + 1;
+        }
+        return Arrays.stream(dp).sum();
+    }
+
     @Test
     public void sssss() {
-        System.out.println(removeDuplicateLetters("cbacdcbc"));
+        System.out.println(candy(new int[]{1, 0, 2}));
 
     }
 }
