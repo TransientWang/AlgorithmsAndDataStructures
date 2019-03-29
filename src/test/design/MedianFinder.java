@@ -2,12 +2,11 @@ package test.design;
 
 import org.junit.Test;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
  * @author wangfy
- * @Description 数据流的中位数
+ * @Description 295. 数据流的中位数（review）
  * 中位数是有序列表中间的数。如果列表长度是偶数，中位数则是中间两个数的平均值。
  * <p>
  * 例如，
@@ -24,13 +23,9 @@ import java.util.PriorityQueue;
  */
 
 public class MedianFinder {
-    //左边大顶堆
     private PriorityQueue<Integer> left;
-    //右边小顶堆
     private PriorityQueue<Integer> right;
-    //判断奇偶，辅助将元素均匀插入两堆
     private boolean flag;
-
 
     /**
      * @return
@@ -41,19 +36,11 @@ public class MedianFinder {
      * @Line 22
      **/
     public MedianFinder() {
-        left = new PriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return -o1.compareTo(o2);
-            }
+        this.left = new PriorityQueue<>((o1, o2) -> {
+            return -(o1 - o2);
         });
-        right = new PriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1.compareTo(o2);
-            }
-        });
-        flag = false;
+        this.right = new PriorityQueue<>();
+        this.flag = true;
     }
 
     /**
@@ -66,52 +53,31 @@ public class MedianFinder {
      * @Line 62
      **/
     public void addNum(int num) {
-        flag = !flag;
         if (flag) {
-
-            if (right.size() > 0 && num > right.peek()) {
-                right.add(num);
-                num = right.poll();
-            }
-            left.add(num);
+            right.offer(num);
+            left.offer(right.poll());
         } else {
-
-            if (left.size() > 0 && num < left.peek()) {
-                left.add(num);
-                num = left.poll();
-            }
-            right.add(num);
+            left.offer(num);
+            right.offer(left.poll());
         }
+        flag = !flag;
     }
 
     public double findMedian() {
-        if (flag) {
-            if (left.size() != 0) {
-                return left.peek();
-            }
-            return right.peek();
 
-
-        } else {
-
-            return (left.peek() + right.peek()) / 2.0;
-        }
+        return !flag ? left.peek() : (left.peek() + right.peek()) / 2.0;
     }
 
     @Test
     public void test() {
+
         var medfinder = new MedianFinder();
         medfinder.addNum(1);
         medfinder.addNum(2);
         medfinder.addNum(3);
-//        medfinder.addNum(4);
+        medfinder.addNum(4);
 //        medfinder.addNum(5);
 //        medfinder.addNum(6);
-
-        medfinder.left.forEach(o -> System.out.println(o + " "));
-        System.out.println();
-        medfinder.right.forEach(o -> System.out.println(o + " "));
-        System.out.println();
 
         System.out.println(medfinder.findMedian());
     }
