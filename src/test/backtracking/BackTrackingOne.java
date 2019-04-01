@@ -37,7 +37,6 @@ public class BackTrackingOne {
 
     class Trie {
         HashMap<Character, HashMap> lookup;
-        Object end = new Object();
 
         public Trie() {
             this.lookup = new HashMap<>();
