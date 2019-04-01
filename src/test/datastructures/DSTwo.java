@@ -2,9 +2,8 @@ package test.datastructures;
 
 import org.junit.Test;
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author wangfy
@@ -85,6 +84,12 @@ public class DSTwo {
 
     }
 
+    /**
+     * @date 2019/4/1 10:53
+     * @return int
+     * @Description 863. 二叉树中所有距离为 K 的结点
+     * @Param [nums, left, right] 
+     **/
     public int robHelp(int[] nums, int left, int right) {
         if (right - left == 1) return nums[left];
         int[] dp = new int[nums.length];
@@ -94,6 +99,54 @@ public class DSTwo {
             dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
         }
         return dp[right - 1];
+    }
+
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+        HashMap<TreeNode, TreeNode> parent = new HashMap<>();
+        dfs(parent, root, null);
+        Deque<TreeNode> deque = new LinkedList<>();
+        Set<TreeNode> seen = new TreeSet<>((a, b) -> a.val - b.val);
+        int dist = 0;
+        deque.addFirst(target);
+        seen.add(target);
+
+        while (!deque.isEmpty()) {
+            if (dist == K) {
+                return deque.stream().map(node -> node.val).collect(Collectors.toList());
+            }
+
+            int len = deque.size();
+            for (int i = 0; i < len; i++) {
+                TreeNode node = deque.pollLast();
+                if (node.left != null && !seen.contains(node.left)) {
+                    seen.add(node.left);
+                    deque.addFirst(node.left);
+                }
+                if (node.right != null && !seen.contains(node.right)) {
+                    seen.add(node.right);
+                    deque.addFirst(node.right);
+                }
+                TreeNode pre = parent.get(node);
+                if (pre != null && !seen.contains(pre)) {
+                    seen.add(pre);
+                    deque.addFirst(pre);
+                }
+            }
+            dist++;
+            
+        }
+        
+        return new LinkedList<Integer>();
+    }
+
+    public void dfs(HashMap<TreeNode, TreeNode> parent, TreeNode node, TreeNode pre) {
+        Optional.ofNullable(node).ifPresent(n -> {
+            parent.put(node, pre);
+            dfs(parent, node.left, node);
+            dfs(parent, node.right, node);
+        });
+
+
     }
 
     @Test
