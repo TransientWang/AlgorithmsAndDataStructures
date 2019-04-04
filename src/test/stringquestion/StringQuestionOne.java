@@ -85,4 +85,25 @@ public class StringQuestionOne {
         }
         return String.valueOf(result);
     }
+    /**
+     * @date 2019/4/5 5:56
+     * @return int
+     * @Description 713. 乘积小于K的子数组
+     * @Param [nums, k] 
+     **/
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        if(k <= 1){
+            return 0;
+        }
+        int left = 0, res = 0;
+        int pre = 1;
+        for(int right = 0; right < nums.length; right++){
+            pre *= nums[right];
+            while(pre >= k){
+                pre /= nums[left++];
+            }
+            res += right - left + 1;
+        }
+        return res;
+    }
 }
