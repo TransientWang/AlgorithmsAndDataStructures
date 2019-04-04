@@ -85,10 +85,10 @@ public class DSTwo {
     }
 
     /**
-     * @date 2019/4/1 10:53
      * @return int
+     * @date 2019/4/1 10:53
      * @Description 863. 二叉树中所有距离为 K 的结点
-     * @Param [nums, left, right] 
+     * @Param [nums, left, right]
      **/
     public int robHelp(int[] nums, int left, int right) {
         if (right - left == 1) return nums[left];
@@ -133,9 +133,9 @@ public class DSTwo {
                 }
             }
             dist++;
-            
+
         }
-        
+
         return new LinkedList<Integer>();
     }
 
@@ -148,10 +148,32 @@ public class DSTwo {
 
 
     }
+    /**
+     * @date 2019/4/5 7:45
+     * @return int[][]
+     * @Description 973. 最接近原点的 K 个点
+     * @Param [points, K] 
+     **/
+    public int[][] kClosest(int[][] points, int K) {
+//        Arrays.sort(points, (p1, p2) -> p1[0] * p1[0] + p1[1] * p1[1] - p2[0] * p2[0] - p2[1] * p2[1]);
+//        return Arrays.copyOfRange(points, 0, K);
+        PriorityQueue<int[]> heap = new PriorityQueue<>((point1, point2) -> (-point1[0] * point1[0] - point1[1] * point1[1]) - (-point2[0] * point2[0] - point2[1] * point2[1]));
+        for (int i = 0; i < points.length; i++) {
+            if (heap.offer(points[i]) && heap.size() > K)
+                heap.poll();
+        }
+        int[][] res = new int[K][2];
+
+        while (K-- > 0) {
+            res[K] = heap.poll();
+            System.out.println(res[K][0]);
+        }
+        return res;
+    }
 
     @Test
     public void test() {
-        System.out.println(rob(new int[]{2, 3, 2}));
+        System.out.println(kClosest(new int[][]{{3, 3}, {5, -1}, {-2, 4}}, 2));
 
     }
 }
