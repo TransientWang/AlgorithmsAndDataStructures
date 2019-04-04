@@ -89,6 +89,7 @@ public class StringQuestionOne {
      * @date 2019/4/5 5:56
      * @return int
      * @Description 713. 乘积小于K的子数组
+     * 尺取法
      * @Param [nums, k] 
      **/
     public int numSubarrayProductLessThanK(int[] nums, int k) {
